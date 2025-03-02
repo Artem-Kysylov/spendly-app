@@ -1,9 +1,8 @@
-import React from 'react'
 import { ButtonProps } from '../types/types'
 
-const Button = ({ text, className }: ButtonProps ) => {
+const Button = ({ text, className, onClick }: ButtonProps) => {
   return (
-    <button className={`btn ${className}`}>{text}</button>
+    <button className={`btn ${className}`} onClick={onClick}>{text}</button>
   )
 }
 

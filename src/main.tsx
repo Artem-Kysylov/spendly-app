@@ -10,12 +10,14 @@ import NotFound from './routes/NotFound.tsx'
 import FormPage from './routes/FormPage.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/dashboard" element={<Dashboard/>} />
-      <Route path="/form" element={<FormPage/>} />
-      <Route path="/*" element={<NotFound/>} />
-    </Routes>
-  </BrowserRouter>
+  <div data-theme="mytheme">
+    <BrowserRouter>
+      <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path="/form" element={<FormPage/>} />
+          <Route path="/*" element={<NotFound/>} />
+      </Routes>
+    </BrowserRouter>
+  </div>
 )
