@@ -2,12 +2,11 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './lib/supabaseClient'
 import { Session, Subscription } from '@supabase/supabase-js'
-import { Auth } from '@supabase/auth-ui-react'
-import { ThemeSupa } from '@supabase/auth-ui-shared'
 import './index.css'
 
-// Import components 
-import Button from "./components/Button"
+// Import routes 
+import Dashboard from './routes/Dashboard'
+import LandingPage from './routes/LandingPage'
 
 function App() {
   const [session, setSession] = useState<Session | null>(null)
@@ -27,21 +26,11 @@ function App() {
   }, [])
 
   if (!session) {
-    return (<Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />)
+    return (<LandingPage/>)
   }
   else {
-    return (<div>Logged in!</div>)
+    return (<Dashboard/>)
   }
- 
-  return (
-    <>
-      <h1>Explore Spendly app</h1>
-      <Button
-        text='Sign in with Google'
-        className="btn-primary text-white"
-      />
-    </>
-  )
 }
 
 export default App
