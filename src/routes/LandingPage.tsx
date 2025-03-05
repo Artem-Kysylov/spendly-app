@@ -1,16 +1,14 @@
 import React from 'react'
 
-// Import components 
-import Button from "../components/Button"
+// Import sections 
+import Hero from '../components/landing-sections/Hero'
+
+
 
 const LandingPage = () => {
   return (
     <>
-        <h1>Explore Spendly app</h1>
-        <Button
-            text='Sign in with Google'
-            className="btn-primary text-white"
-        />
+      <Hero/>
     </>
   )
 }

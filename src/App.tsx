@@ -1,36 +1,27 @@
 // Imports 
-import { useState, useEffect } from 'react'
-import { supabase } from './lib/supabaseClient'
-import { Session, Subscription } from '@supabase/supabase-js'
 import './index.css'
+import { BrowserRouter, Routes, Route } from "react-router"
+import useAuth from './hooks/useAuth'
 
 // Import routes 
-import Dashboard from './routes/Dashboard'
-import LandingPage from './routes/LandingPage'
+import Dashboard from './routes/Dashboard.tsx'
+import NotFound from './routes/NotFound.tsx'
+import FormPage from './routes/FormPage.tsx'
+import LandingPage from './routes/LandingPage.tsx'
 
 function App() {
-  const [session, setSession] = useState<Session | null>(null)
+  const { session } = useAuth()
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
-
-    const {
-      data: { subscription },
-    }: { data: { subscription: Subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
-
-  if (!session) {
-    return (<LandingPage/>)
-  }
-  else {
-    return (<Dashboard/>)
-  }
+return (
+    <BrowserRouter>
+      <Routes>
+          <Route path="/" element={!session ? <LandingPage /> : <Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path="/form" element={<FormPage/>} />
+          <Route path="/*" element={<NotFound/>} />
+      </Routes>
+  </BrowserRouter>
+  )
 }
 
 export default App
