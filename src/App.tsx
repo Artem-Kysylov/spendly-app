@@ -1,7 +1,7 @@
 // Imports 
 import './index.css'
 import { BrowserRouter, Routes, Route } from "react-router"
-import useAuth from './hooks/useAuth'
+import { UserAuth } from './context/AuthContext'
 
 // Import routes 
 import Dashboard from './routes/Dashboard.tsx'
@@ -10,7 +10,7 @@ import FormPage from './routes/FormPage.tsx'
 import LandingPage from './routes/LandingPage.tsx'
 
 function App() {
-  const { session } = useAuth()
+  const { session } = UserAuth()
 
 return (
     <BrowserRouter>

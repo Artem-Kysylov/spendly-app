@@ -1,18 +1,18 @@
-import React from 'react'
-import useAuth from '../hooks/useAuth'
+// Imports 
+import { UserAuth } from '../context/AuthContext'
 
 // Import components 
 import Button from "../components/Button"
 
 const TopBar = () => {
-    const { session, signOut } = useAuth()
+    const { session, signOut } = UserAuth()
 
   return (
     <div>
         Spendly logo
         <div>
             <div className="avatar">
-                <div className="w-8 rounded">
+                <div className="w-8 h-8 rounded-lg overflow-hidden">
                     <img 
                         src={session?.user?.user_metadata?.avatar_url} 
                         alt='user-avatar'

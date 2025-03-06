@@ -1,11 +1,12 @@
 // Imports 
-import { useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 import { supabase } from "../lib/supabaseClient"
+import { AuthContextType } from '../types/types'
 import { Session, Subscription } from '@supabase/supabase-js'
 
-const useAuth = () => {
+const AuthContext = createContext<AuthContextType | null>(null)
 
-    // User auth session 
+export const AuthContextProvider = ({ children }: {children:React.ReactNode}) => {
     const [session, setSession] = useState<Session | null>(null)
 
     useEffect(() => {
@@ -22,8 +23,7 @@ const useAuth = () => {
         return () => subscription.unsubscribe()
       }, [])
 
-
-    // Sign in with Google
+          // Sign in with Google
     const signInWithGoogle = async () => {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
@@ -49,7 +49,17 @@ const useAuth = () => {
         }
     }
 
-    return { session, signInWithGoogle, signOut }
+    return (
+        <AuthContext.Provider value={{session, signInWithGoogle, signOut }}>
+            {children}
+        </AuthContext.Provider>
+    )
 }
 
-export default useAuth
+export const UserAuth = (): AuthContextType => {
+    const context = useContext(AuthContext)
+    if(!context) {
+        throw new Error('useAuth must be used within an AuthContextProvider')
+    }
+    return context
+}

@@ -1,21 +1,11 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import useAuth from '../../hooks/useAuth'
+import { useSignWithGoogle } from '../../hooks/useSignWithGoogle' 
 
 // Import components 
 import Button from "../Button"
 
 const Hero = () => {
-    const { signInWithGoogle } = useAuth()
-    const navigate = useNavigate()
-
-    const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-        const { error } = await signInWithGoogle()
-        if(!error) {
-            navigate('/dashboard')
-        }        
-    }
+    const handleGoogleClick = useSignWithGoogle()
 
   return (
     <section>
@@ -23,7 +13,7 @@ const Hero = () => {
         <Button
             text='Sign in with Google'
             className="btn-primary text-white"
-            onClick={handleClick}
+            onClick={handleGoogleClick}
         />
     </section>
   )

@@ -1,11 +1,11 @@
-import React from 'react'
-import useAuth from '../hooks/useAuth'
+// Imports 
+import { UserAuth } from '../context/AuthContext' 
 
 // Import components 
 import TopBar from '../components/TopBar'
 
 const Dashboard = () => {
-  const { session } = useAuth()
+  const { session } = UserAuth()
   console.log(session)
 
   return (
