@@ -9,6 +9,8 @@ import NotFound from './routes/NotFound.tsx'
 import FormPage from './routes/FormPage.tsx'
 import LandingPage from './routes/LandingPage.tsx'
 
+// Import components 
+import ProtectedRoute from './components/ProtectedRoute.tsx'
 function App() {
   const { session } = UserAuth()
 

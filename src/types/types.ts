@@ -11,3 +11,7 @@ export interface AuthContextType {
     signInWithGoogle: () => Promise<{ error: any }>
     signOut: () => Promise<void>
 }
+
+export interface ProtectedRouteProps {
+    children: React.ReactNode
+}
