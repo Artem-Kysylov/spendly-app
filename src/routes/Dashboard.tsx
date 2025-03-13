@@ -4,6 +4,7 @@ import { UserAuth } from '../context/AuthContext'
 // Import components 
 import TopBar from '../components/TopBar'
 import Button from '../components/Button'
+import TransactionsTable from '../components/TransactionsTable'
 
 // Import hooks 
 import { useNavigate } from 'react-router-dom'
@@ -22,6 +23,7 @@ const Dashboard = () => {
         text='Add Transaction'
         onClick={() => navigate('/form')}
       />
+      <TransactionsTable/>
     </div>
   )
 }
