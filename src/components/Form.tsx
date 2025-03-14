@@ -10,9 +10,10 @@ const Form = () => {
   const { session } = UserAuth()
 
   // State 
-  const [name, setName] = useState<string>('')
+  const [title, setTitle] = useState<string>('')
   const [amount, setAmount] = useState<string>('')
   const [type, setType] = useState<'expense' | 'income'>('expense')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   // Handlers 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,11 +21,12 @@ const Form = () => {
     if (!session?.user) return alert("Please login to add a transaction")
 
       try {
+        setIsLoading(true)
         const { data, error } = await supabase
-          .from('transactions')
+          .from('Transactions')
           .insert({
             user_id: session.user.id,
-            name,
+            title: title,
             amount: Number(amount),
             type,
             created_at: new Date().toISOString()
@@ -37,7 +39,7 @@ const Form = () => {
         } else {
           console.log('Transaction added successfully:', data)
           // Clear form
-          setName('')
+          setTitle('')
           setAmount('')
           setType('expense')
           alert('Transaction added successfully!')
@@ -45,6 +47,8 @@ const Form = () => {
       } catch (error) {
       console.error('Error:', error)
       alert('An unexpected error occurred. Please try again.')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -55,14 +59,16 @@ const Form = () => {
             type="text" 
             placeholder="Transaction Name" 
             className="input" 
-            value={name}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+            value={title}
+            required
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
           />
           <input 
             type="number" 
-            placeholder="Amount (USD)" 
+            placeholder="Amount(USD)" 
             className="input" 
             value={amount}
+            required
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAmount((e.target.value))}
           />
           <div>
@@ -87,8 +93,9 @@ const Form = () => {
           </div>
         <Button 
           type='submit'
-          text='Add Transaction' 
+          text={isLoading ? 'Adding...' : 'Add Transaction'}
           className='btn-primary text-white'
+          disabled={isLoading}
         />
       </form>
     </div>
