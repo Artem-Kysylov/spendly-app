@@ -17,3 +17,16 @@ export interface AuthContextType {
 export interface ProtectedRouteProps {
     children: React.ReactNode
 }
+
+export interface ToastMessageProps {
+    text: string,
+    type: 'success' | 'error',
+}
+
+export interface Transaction {
+    id: string,
+    title: string,
+    amount: number,
+    type: 'expense' | 'income',
+    created_at: string
+}

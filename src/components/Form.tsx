@@ -2,9 +2,11 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
 import { UserAuth } from '../context/AuthContext'
+import { ToastMessageProps } from '../types/types'
 
 // Import components 
 import Button from './Button'
+import ToastMessage from './ToastMessage'
 
 const Form = () => {
   const { session } = UserAuth()
@@ -14,11 +16,12 @@ const Form = () => {
   const [amount, setAmount] = useState<string>('')
   const [type, setType] = useState<'expense' | 'income'>('expense')
   const [isLoading, setIsLoading] = useState<boolean>(false)
-
+  const [toastMessage, setToastMessage] = useState<ToastMessageProps | null>(null)
+  
   // Handlers 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!session?.user) return alert("Please login to add a transaction")
+    if (!session?.user) return handleToastMessage('Please login to add a transaction', 'error')    
 
       try {
         setIsLoading(true)
@@ -35,25 +38,37 @@ const Form = () => {
   
         if (error) {
           console.error('Error inserting transaction:', error)
-          alert('Failed to add transaction. Please try again.')
+          handleToastMessage('Failed to add transaction. Please try again.', 'error')
         } else {
           console.log('Transaction added successfully:', data)
           // Clear form
           setTitle('')
           setAmount('')
           setType('expense')
-          alert('Transaction added successfully!')
+          handleToastMessage('Transaction added successfully!', 'success')
         }
       } catch (error) {
       console.error('Error:', error)
-      alert('An unexpected error occurred. Please try again.')
+      handleToastMessage('An unexpected error occurred. Please try again.', 'error')
     } finally {
       setIsLoading(false)
     }
   }
 
+  const handleToastMessage = (text: string, type: ToastMessageProps['type']) => {
+    setToastMessage({ text, type })
+    setTimeout(() => {
+      setToastMessage(null)
+    }, 3000)
+  }
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, '');
+  }
+
   return (
     <div>
+      {toastMessage && <ToastMessage text={toastMessage.text} type={toastMessage.type} />}
         <form onSubmit={handleSubmit}>
           <input 
             type="text" 
@@ -62,6 +77,7 @@ const Form = () => {
             value={title}
             required
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+            onInput={handleInput}
           />
           <input 
             type="number" 
