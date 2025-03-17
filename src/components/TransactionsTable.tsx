@@ -71,8 +71,8 @@ const TransactionsTable = () => {
                             <td>{transaction.title}</td>
                             <td>{transaction.amount}</td>
                             <td>
-                              <span className={`badge ${transaction.type === 'expense' ? 'badge-error text-white' : 'badge-success text-white'}`}>
-                                {transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}
+                              <span className={`badge ${transaction.type === 'expense' ? 'badge-error text-white uppercase text-xs' : 'badge-success text-white uppercase text-xs'}`}>
+                                {transaction.type}
                               </span>
                             </td>
                             <td>{transaction.created_at}</td>
