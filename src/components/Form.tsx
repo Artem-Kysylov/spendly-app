@@ -17,8 +17,19 @@ const Form = () => {
   const [type, setType] = useState<'expense' | 'income'>('expense')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [toastMessage, setToastMessage] = useState<ToastMessageProps | null>(null)
+  const [showToast, setShowToast] = useState(false)
   
   // Handlers 
+  const handleToastMessage = (text: string, type: ToastMessageProps['type']) => {
+    setToastMessage({ text, type })
+    setShowToast(true)
+
+    setTimeout(() => {
+      setShowToast(false)
+      setTimeout(() => setToastMessage(null), 500) 
+    }, 3000)
+  }
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!session?.user) return handleToastMessage('Please login to add a transaction', 'error')    
@@ -55,12 +66,6 @@ const Form = () => {
     }
   }
 
-  const handleToastMessage = (text: string, type: ToastMessageProps['type']) => {
-    setToastMessage({ text, type })
-    setTimeout(() => {
-      setToastMessage(null)
-    }, 3000)
-  }
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, '');
@@ -68,7 +73,7 @@ const Form = () => {
 
   return (
     <div>
-      {toastMessage && <ToastMessage text={toastMessage.text} type={toastMessage.type} />}
+      {toastMessage && showToast && <ToastMessage text={toastMessage.text} type={toastMessage.type} />}
         <form onSubmit={handleSubmit}>
           <input 
             type="text" 

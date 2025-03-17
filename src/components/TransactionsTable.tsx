@@ -70,7 +70,11 @@ const TransactionsTable = () => {
                             <th>{index + 1}</th>
                             <td>{transaction.title}</td>
                             <td>{transaction.amount}</td>
-                            <td>{transaction.type}</td>
+                            <td>
+                              <span className={`badge ${transaction.type === 'expense' ? 'badge-error text-white' : 'badge-success text-white'}`}>
+                                {transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}
+                              </span>
+                            </td>
                             <td>{transaction.created_at}</td>
                             <td>
                                 <Button
