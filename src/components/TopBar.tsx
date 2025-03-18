@@ -25,6 +25,7 @@ const TopBar = () => {
                                 className="w-full h-full object-cover"
                                 src={session.user.user_metadata.avatar_url}
                                 alt='user-avatar'
+                                referrerPolicy="no-referrer"
                             />
                         </div>
                     </div>

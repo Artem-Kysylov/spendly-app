@@ -1,11 +1,13 @@
 import { Session } from '@supabase/supabase-js'
+import { ReactNode } from 'react'
 
 export interface ButtonProps {
-    text: string,
+    text: ReactNode,
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void,
     className?: string,
     type?: 'button' | 'submit' | 'reset',
-    disabled?: boolean
+    disabled?: boolean,
+    isLoading?: boolean
 }
 
 export interface AuthContextType {
@@ -29,4 +31,9 @@ export interface Transaction {
     amount: number,
     type: 'expense' | 'income',
     created_at: string
+}
+
+export interface ModalProps {
+    title: string,
+    text: string
 }

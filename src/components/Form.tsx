@@ -17,16 +17,15 @@ const Form = () => {
   const [type, setType] = useState<'expense' | 'income'>('expense')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [toastMessage, setToastMessage] = useState<ToastMessageProps | null>(null)
-  const [showToast, setShowToast] = useState(false)
+
   
   // Handlers 
   const handleToastMessage = (text: string, type: ToastMessageProps['type']) => {
+    console.log('Form: Setting toast message:', { text, type });
     setToastMessage({ text, type })
-    setShowToast(true)
-
+    
     setTimeout(() => {
-      setShowToast(false)
-      setTimeout(() => setToastMessage(null), 500) 
+      setToastMessage(null)
     }, 3000)
   }
   
@@ -72,53 +71,56 @@ const Form = () => {
   }
 
   return (
-    <div>
-      {toastMessage && showToast && <ToastMessage text={toastMessage.text} type={toastMessage.type} />}
-        <form onSubmit={handleSubmit}>
-          <input 
-            type="text" 
-            placeholder="Transaction Name" 
-            className="input" 
-            value={title}
-            required
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
-            onInput={handleInput}
-          />
-          <input 
-            type="number" 
-            placeholder="Amount(USD)" 
-            className="input" 
-            value={amount}
-            required
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAmount((e.target.value))}
-          />
-          <div>
-            <input 
-              type="radio" 
-              name="type" 
-              id="expense" 
-              checked={type === 'expense'}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setType(e.target.value as 'expense' | 'income')}
-              value="expense"
-            />
-            <label htmlFor="expense">Expense</label>
-            <input 
-              type="radio" 
-              name="type" 
-              id="income" 
-              checked={type === 'income'}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setType(e.target.value as 'expense' | 'income')}
-              value="income"
-            />
-            <label htmlFor="income">Income</label>
-          </div>
-        <Button 
-          type='submit'
-          text={isLoading ? 'Adding...' : 'Add Transaction'}
-          className='btn-primary text-white'
-          disabled={isLoading}
+    <div className="relative">
+      {toastMessage && (
+        <ToastMessage text={toastMessage.text} type={toastMessage.type} />
+      )}
+      <form onSubmit={handleSubmit}>
+        <input 
+          type="text" 
+          placeholder="Transaction Name" 
+          className="input" 
+          value={title}
+          required
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+          onInput={handleInput}
         />
-      </form>
+        <input 
+          type="number" 
+          placeholder="Amount(USD)" 
+          className="input" 
+          value={amount}
+          required
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAmount((e.target.value))}
+        />
+        <div>
+          <input 
+            type="radio" 
+            name="type" 
+            id="expense" 
+            checked={type === 'expense'}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setType(e.target.value as 'expense' | 'income')}
+            value="expense"
+          />
+          <label htmlFor="expense">Expense</label>
+          <input 
+            type="radio" 
+            name="type" 
+            id="income" 
+            checked={type === 'income'}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setType(e.target.value as 'expense' | 'income')}
+            value="income"
+          />
+          <label htmlFor="income">Income</label>
+        </div>
+      <Button 
+        type='submit'
+        text='Add Transaction'
+        className='btn-primary text-white'
+        disabled={isLoading}
+        isLoading={isLoading}
+      />
+    </form>
     </div>
   )
 }
