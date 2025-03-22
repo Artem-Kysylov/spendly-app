@@ -2,11 +2,13 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
 import { UserAuth } from '../context/AuthContext'
-import { ToastMessageProps } from '../types/types'
 
 // Import components 
 import Button from './Button'
 import ToastMessage from './ToastMessage'
+
+// Import types
+import { ToastMessageProps } from '../types/types'
 
 const Form = () => {
   const { session } = UserAuth()

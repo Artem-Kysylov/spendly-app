@@ -1,3 +1,4 @@
+// Import types
 import { ButtonProps } from '../types/types'
 
 const Button = ({ text, className, onClick, type = 'button', disabled, isLoading }: ButtonProps) => {

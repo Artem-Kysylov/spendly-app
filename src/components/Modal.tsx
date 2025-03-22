@@ -1,22 +1,41 @@
-// Imports 
-import React from 'react'
+// Imports
+import  { useEffect, useRef } from 'react'
 
-// Import components 
+// Import components
 import Button from './Button'
 
-// Import types 
+// Import types
 import { ModalProps } from '../types/types'
+  
+const Modal = ({ title, text, onClose, signOut }: ModalProps) => {
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
-const Modal = ({ title, text }: ModalProps) => {
+  useEffect(() => {
+    if (dialogRef.current) {
+      dialogRef.current.showModal();
+    }
+    
+    return () => {
+      if (dialogRef.current) {
+        dialogRef.current.close();
+      }
+    };
+  }, []);
+
+  const handleSignOut = () => {
+    signOut();
+    onClose();
+  };
+
   return (
-    <dialog id="my_modal_1" className="modal">
+    <dialog ref={dialogRef} id="my_modal_1" className="modal">
         <div className="modal-box">
-            <h3 className="font-bold text-lg">Hello!</h3>
-            <p className="py-4">Press ESC key or click the button below to close</p>
+            <h3 className="font-bold text-lg">{title}</h3>
+            <p className="py-4">{text}</p>
             <div className="modal-action">
             <form method="dialog">
-                <Button className='btn-ghost' text='Close'/>
-                <Button className='btn-primary' text='Sure'/>
+                <Button className='btn-ghost' text='Close' onClick={onClose}/>
+                <Button className='btn-primary text-white' text='Signout' onClick={handleSignOut}/>
             </form>
             </div>
         </div>

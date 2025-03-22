@@ -1,5 +1,7 @@
-// Imports 
+// Import types
 import { ToastMessageProps } from '../types/types'
+
+// Import components
 import { FaCircleCheck } from "react-icons/fa6"
 import { MdCancel } from "react-icons/md"
 

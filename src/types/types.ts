@@ -37,3 +37,15 @@ export interface ModalProps {
     title: string,
     text: string
 }
+
+export interface TransactionsTableProps {
+    transactions: Transaction[]
+    onDelete: () => void
+}
+
+export interface ModalProps {
+    title: string,
+    text: string,
+    onClose: () => void,
+    signOut: () => void
+}

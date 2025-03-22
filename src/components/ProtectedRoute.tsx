@@ -1,6 +1,8 @@
-// Imports 
+// Imports
 import { Navigate } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext'
+
+// Import types
 import { ProtectedRouteProps } from '../types/types'
 
 

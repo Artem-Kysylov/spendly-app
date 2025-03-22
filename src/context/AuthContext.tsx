@@ -1,8 +1,10 @@
 // Imports 
 import { createContext, useContext, useState, useEffect } from 'react'
 import { supabase } from "../lib/supabaseClient"
-import { AuthContextType } from '../types/types'
 import { Session, Subscription } from '@supabase/supabase-js'
+
+// Import types
+import { AuthContextType } from '../types/types'
 
 const AuthContext = createContext<AuthContextType | null>(null)
 
@@ -23,7 +25,7 @@ export const AuthContextProvider = ({ children }: {children:React.ReactNode}) =>
         return () => subscription.unsubscribe()
       }, [])
 
-          // Sign in with Google
+    // Sign in with Google
     const signInWithGoogle = async () => {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
