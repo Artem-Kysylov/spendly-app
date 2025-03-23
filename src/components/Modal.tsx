@@ -7,7 +7,7 @@ import Button from './Button'
 // Import types
 import { ModalProps } from '../types/types'
   
-const Modal = ({ title, text, onClose, signOut }: ModalProps) => {
+const Modal = ({ title, text, onClose, onConfirm, signOut }: ModalProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -23,8 +23,16 @@ const Modal = ({ title, text, onClose, signOut }: ModalProps) => {
   }, []);
 
   const handleSignOut = () => {
-    signOut();
-    onClose();
+    if (signOut) {
+      signOut();
+      onClose();
+    }
+  };
+
+  const handleConfirm = () => {
+    if (onConfirm) {
+      onConfirm();
+    }
   };
 
   return (
@@ -33,10 +41,15 @@ const Modal = ({ title, text, onClose, signOut }: ModalProps) => {
             <h3 className="font-bold text-lg">{title}</h3>
             <p className="py-4">{text}</p>
             <div className="modal-action">
-            <form method="dialog">
+              <form method="dialog">
                 <Button className='btn-ghost' text='Close' onClick={onClose}/>
-                <Button className='btn-primary text-white' text='Signout' onClick={handleSignOut}/>
-            </form>
+                {signOut && (
+                  <Button className='btn-primary text-white' text='Signout' onClick={handleSignOut}/>
+                )}
+                {onConfirm && (
+                  <Button className='btn-error text-white' text='Delete' onClick={handleConfirm}/>
+                )}
+              </form>
             </div>
         </div>
     </dialog>

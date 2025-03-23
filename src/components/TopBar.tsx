@@ -13,6 +13,14 @@ const TopBar = () => {
 
     return (
         <>
+            {isModalOpen && (
+                <Modal 
+                    title="Signout"
+                    text="Are you sure you want to signout?"
+                    onClose={() => setIsModalOpen(false)}
+                    signOut={signOut}
+                    />
+                )}
             <div className="flex justify-between items-center p-4">
                 <div className="flex items-center">
                     <img 
@@ -41,14 +49,6 @@ const TopBar = () => {
                     />
                 </div>
             </div>
-                {isModalOpen && (
-                    <Modal 
-                        title="Signout"
-                        text="Are you sure you want to signout?"
-                        onClose={() => setIsModalOpen(false)}
-                        signOut={signOut}
-                    />
-                )}
         </>
     )
 }
