@@ -7,7 +7,8 @@ export interface ButtonProps {
     className?: string,
     type?: 'button' | 'submit' | 'reset',
     disabled?: boolean,
-    isLoading?: boolean
+    isLoading?: boolean,
+    icon?: ReactNode
 }
 
 export interface AuthContextType {

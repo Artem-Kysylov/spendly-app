@@ -1,6 +1,8 @@
 // Imports 
 import { useState } from 'react'
 import { supabase } from '../lib/supabaseClient'    
+import useModal from '../hooks/useModal'
+import { MdDeleteForever } from "react-icons/md"
 
 // Import components 
 import Button from '../components/Button'
@@ -10,10 +12,13 @@ import Modal from './Modal'
 // Import types
 import { ToastMessageProps, TransactionsTableProps } from '../types/types'
 
+
 const TransactionsTable = ({ transactions, onDelete }: TransactionsTableProps) => {
   const [toastMessage, setToastMessage] = useState<ToastMessageProps | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedTransactionId, setSelectedTransactionId] = useState<string | null>(null)
+
+  // Hooks
+  const { isModalOpen, openModal, closeModal } = useModal()
 
   const handleDelete = async (id: string) => {
     try {
@@ -31,7 +36,7 @@ const TransactionsTable = ({ transactions, onDelete }: TransactionsTableProps) =
       console.error('Unexpected error during deletion:', error)
       handleToastMessage('An unexpected error occurred', 'error')
     } finally {
-      setIsModalOpen(false)
+      closeModal()
       setSelectedTransactionId(null)
     }
   }
@@ -46,19 +51,21 @@ const TransactionsTable = ({ transactions, onDelete }: TransactionsTableProps) =
 
   const handleOpenModal = (id: string) => {
     setSelectedTransactionId(id)
-    setIsModalOpen(true)
+    openModal()
   }
 
   const handleCloseModal = () => {
-    setIsModalOpen(false)
+    closeModal()
     setSelectedTransactionId(null)
   }
   
   return (
     <div className="relative">
+      {/* Toast message */}
       {toastMessage && (
         <ToastMessage text={toastMessage.text} type={toastMessage.type} />
       )}
+      {/* Modal */}
       {isModalOpen && selectedTransactionId && (
         <Modal 
           title="Delete transaction"
@@ -93,7 +100,9 @@ const TransactionsTable = ({ transactions, onDelete }: TransactionsTableProps) =
                 </td>
                 <td>{new Date(transaction.created_at).toLocaleDateString()}</td>
                 <td>
+
                   <Button
+                    icon={<MdDeleteForever style={{ width: '24px', height: '24px' }}/>}
                     text="Delete"
                     className='btn-ghost text-error'
                     onClick={() => handleOpenModal(transaction.id)}

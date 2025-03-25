@@ -1,13 +1,14 @@
 // Imports 
-import { useState } from 'react'
 import { UserAuth } from '../context/AuthContext'
+import useModal from '../hooks/useModal'
 
 // Import components 
 import Button from "../components/Button"
 import Modal from "../components/Modal"
 
 const TopBar = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    // Hooks
+    const { isModalOpen, openModal, closeModal } = useModal()
 
     const { session, signOut } = UserAuth()
 
@@ -17,7 +18,7 @@ const TopBar = () => {
                 <Modal 
                     title="Signout"
                     text="Are you sure you want to signout?"
-                    onClose={() => setIsModalOpen(false)}
+                    onClose={closeModal}
                     signOut={signOut}
                     />
                 )}
@@ -45,7 +46,7 @@ const TopBar = () => {
                     <Button
                         text='Signout'
                         className='btn-ghost text-primary p-0'
-                        onClick={() => setIsModalOpen(true)}
+                        onClick={openModal}
                     />
                 </div>
             </div>

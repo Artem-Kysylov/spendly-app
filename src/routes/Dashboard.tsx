@@ -8,6 +8,7 @@ import TopBar from '../components/TopBar'
 import Button from '../components/Button'
 import TransactionsTable from '../components/TransactionsTable'
 import EmptyState from '../components/EmptyState'
+import TransactionsCounters from '../components/TransactionsCounters'
 
 // Import hooks 
 import { useNavigate } from 'react-router-dom'
@@ -17,7 +18,7 @@ import { Transaction } from '../types/types'
 
 const Dashboard = () => {
   const { session } = UserAuth()
-  console.log(session)
+
   const navigate = useNavigate()
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
@@ -45,10 +46,13 @@ const Dashboard = () => {
       {transactions.length === 0 ? (
         <EmptyState />
       ) : (
-        <TransactionsTable 
-          transactions={transactions} 
-          onDelete={fetchTransactions} 
-        />
+        <div>
+          <TransactionsCounters />
+          <TransactionsTable 
+            transactions={transactions} 
+            onDelete={fetchTransactions} 
+          />
+        </div>
       )}
     </div>
   )
