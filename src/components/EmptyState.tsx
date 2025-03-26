@@ -12,15 +12,16 @@ const EmptyState = () => {
   }
 
   return (
-    <div>
-        <h1>Don`t have any transactions yet?</h1>
-        <p>Create new by clicking this button</p>
+    <div className="flex flex-col items-center justify-center h-screen gap-5">
+      <img src="/illustration-no-transactions.svg" alt="empty-state" />
+        <h1 className="text-[35px] font-semibold text-secondary-black text-center">Don`t have any transactions yet?</h1>
+        <p className="font-semibold text-secondary-black text-center">Create new by clicking this button</p>
         <Button 
           className="btn-primary text-white"
           text="Add Transaction"
           onClick={handleClick} 
         />
-    </div>
+    </div>  
   )
 }
 

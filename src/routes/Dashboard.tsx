@@ -37,12 +37,16 @@ const Dashboard = () => {
   return (
     <div>
       <TopBar/>
-      <h1>Welcome {session?.user?.user_metadata?.name}</h1>
-      <Button
-        className='btn-primary text-white'
-        text='Add Transaction'
-        onClick={() => navigate('/form')}
-      />
+      <div className="flex items-center justify-between pl-5 pr-5 mt-[30px] md:flex-col md:items-center md:gap-5 md:text-center">
+        <h1 className="text-[35px] font-semibold text-secondary-black">
+          Welcome <span className="text-primary">{session?.user?.user_metadata?.name}</span>
+        </h1>
+        <Button
+          className='btn-primary text-white'
+          text='Add Transaction'
+          onClick={() => navigate('/form')}
+        />
+      </div>
       {transactions.length === 0 ? (
         <EmptyState />
       ) : (

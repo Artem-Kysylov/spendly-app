@@ -1,6 +1,12 @@
+/* Font  */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+/* Tailwind  */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 
 /* Reset styles  */
 *,
@@ -57,4 +63,24 @@ input {
     border: none;
     background: transparent;
     width: 100%;
+}
+
+/* Basic styles  */
+:root {
+    --default-bg-color: #F5F7FE;
+}
+
+* {
+    background-color: var(--default-bg-color);
+}
+
+body,
+html {
+    background-color: var(--default-bg-color);
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Override for white background elements */
+.topbar, .topbar * {
+    background-color: white !important;
 }
