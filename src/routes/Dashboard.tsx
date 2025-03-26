@@ -37,7 +37,7 @@ const Dashboard = () => {
   return (
     <div>
       <TopBar/>
-      <div className="flex items-center justify-between pl-5 pr-5 mt-[30px] md:flex-col md:items-center md:gap-5 md:text-center">
+      <div className="flex flex-col items-center gap-5 text-center mt-[30px] px-5 md:flex-row md:justify-between md:text-left">
         <h1 className="text-[35px] font-semibold text-secondary-black">
           Welcome <span className="text-primary">{session?.user?.user_metadata?.name}</span>
         </h1>
