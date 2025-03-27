@@ -22,7 +22,7 @@ const TopBar = () => {
                     signOut={signOut}
                     />
                 )}
-            <div className="flex justify-between items-center p-5 bg-white border-b light-grey">
+            <div className="flex justify-between items-center p-5 border-b light-grey">
                 <div className="flex items-center">
                     <img 
                         src="/Spendly-logo.svg" 
@@ -30,7 +30,7 @@ const TopBar = () => {
                         className="h-6 w-auto"
                     />
                 </div>
-                <div className="flex items-center gap-2 bg-white">
+                <div className="flex items-center gap-2">
                     {session?.user?.user_metadata?.avatar_url && (
                         <div className="avatar flex items-center justify-center bg-white">
                             <div className="w-10 h-10 rounded-full overflow-hidden">

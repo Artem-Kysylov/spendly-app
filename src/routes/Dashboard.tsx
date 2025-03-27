@@ -50,7 +50,7 @@ const Dashboard = () => {
       {transactions.length === 0 ? (
         <EmptyState />
       ) : (
-        <div>
+        <div className="mt-[30px] px-5 flex flex-col gap-5">
           <TransactionsCounters />
           <TransactionsTable 
             transactions={transactions} 

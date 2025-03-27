@@ -22,6 +22,7 @@ const config: Config = {
       {
         mytheme: {
           'primary': '#3559E0',
+          'primary-light': '#F5F7FE',
           'light-grey': '#ACACAC',
           'secondary-black': '#111111',
         },

@@ -66,21 +66,9 @@ input {
 }
 
 /* Basic styles  */
-:root {
-    --default-bg-color: #F5F7FE;
-}
-
-* {
-    background-color: var(--default-bg-color);
-}
 
 body,
 html {
-    background-color: var(--default-bg-color);
     font-family: 'Montserrat', sans-serif;
 }
 
-/* Override for white background elements */
-.topbar, .topbar * {
-    background-color: white !important;
-}

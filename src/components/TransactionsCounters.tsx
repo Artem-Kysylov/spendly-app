@@ -32,14 +32,14 @@ const TransactionsCounters = () => {
     }, []);
     
   return (
-    <div>
-        <div>
-            <h3>Total Expenses</h3>
-            <span>${totalExpenses}</span>
+    <div className="flex justify-between gap-5">
+        <div className="flex flex-col items-center justify-center gap-2 w-full h-[20vh] rounded-lg border-light-grey border">
+            <h3 className="text-6 text-secondary-black text-center">Total Expenses</h3>
+            <span className="text-[25px] font-semibold text-secondary-black text-center">${totalExpenses}</span>
         </div>
-        <div>
-            <h3>Total Income</h3>
-            <span>${totalIncome}</span>
+        <div className="flex flex-col items-center justify-center gap-2 w-full h-[20vh] rounded-lg border-light-grey border">
+            <h3 className="text-6 text-secondary-black text-center">Total Income</h3>
+            <span className="text-[25px] font-semibold text-secondary-black text-center">${totalIncome}</span>
         </div>
     </div>
   )
