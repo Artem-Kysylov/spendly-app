@@ -34,12 +34,12 @@ const TransactionsCounters = () => {
   return (
     <div className="flex justify-between gap-5">
         <div className="flex flex-col items-center justify-center gap-2 w-full h-[20vh] rounded-lg border-light-grey border">
-            <h3 className="text-6 text-secondary-black text-center">Total Expenses</h3>
-            <span className="text-[25px] font-semibold text-secondary-black text-center">${totalExpenses}</span>
+            <h3 className="text-6 text-error text-center">Total Expenses</h3>
+            <span className="text-[25px] font-semibold text-error text-center">${totalExpenses}</span>
         </div>
         <div className="flex flex-col items-center justify-center gap-2 w-full h-[20vh] rounded-lg border-light-grey border">
-            <h3 className="text-6 text-secondary-black text-center">Total Income</h3>
-            <span className="text-[25px] font-semibold text-secondary-black text-center">${totalIncome}</span>
+            <h3 className="text-6 text-success text-center">Total Income</h3>
+            <span className="text-[25px] font-semibold text-success text-center">${totalIncome}</span>
         </div>
     </div>
   )

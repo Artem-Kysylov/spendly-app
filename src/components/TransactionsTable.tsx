@@ -74,45 +74,44 @@ const TransactionsTable = ({ transactions, onDelete }: TransactionsTableProps) =
           onConfirm={() => handleDelete(selectedTransactionId)}
         />
       )}
-      <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-        <table className="table">
-          {/* head */}
-          <thead>
-            <tr>
-              <th></th>
-              <th>Transaction Name</th>
-              <th>Amount(USD)</th>
-              <th>Type</th>
-              <th>Date</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map((transaction, index) => (
-              <tr key={transaction.id}>
-                <th>{index + 1}</th>
-                <td>{transaction.title}</td>
-                <td>{transaction.amount}</td>
-                <td>
-                  <span className={`badge ${transaction.type === 'expense' ? 'badge-error text-white uppercase text-xs' : 'badge-success text-white uppercase text-xs'}`}>
-                    {transaction.type}
-                  </span>
-                </td>
-                <td>{new Date(transaction.created_at).toLocaleDateString()}</td>
-                <td>
-
-                  <Button
-                    icon={<MdDeleteForever style={{ width: '24px', height: '24px' }}/>}
-                    text="Delete"
-                    className='btn-ghost text-error'
-                    onClick={() => handleOpenModal(transaction.id)}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+<div className="overflow-x-auto rounded-[10px] border border-light-grey bg-base-100">
+  <table className="table">
+    {/* head */}
+    <thead className="border-b border-light-grey">
+      <tr>
+        <th className="!text-[16px]">#</th>
+        <th className="!text-[16px]">Transaction Name</th>
+        <th className="!text-[16px]">Amount(USD)</th>
+        <th className="!text-[16px]">Type</th>
+        <th className="!text-[16px]">Date</th>
+        <th className="!text-[16px]">Delete</th>
+      </tr>
+    </thead>
+    <tbody className="[&>tr]:border-b [&>tr]:border-light-grey">
+      {transactions.map((transaction, index) => (
+        <tr key={transaction.id} className="border-b border-light-grey">
+          <th>{index + 1}</th>
+          <td>{transaction.title}</td>
+          <td>{transaction.amount}</td>
+          <td>
+            <span className={`badge ${transaction.type === 'expense' ? 'badge-error text-white uppercase text-xs' : 'badge-success text-white uppercase text-xs'}`}>
+              {transaction.type}
+            </span>
+          </td>
+          <td>{new Date(transaction.created_at).toLocaleDateString()}</td>
+          <td>
+            <Button
+              icon={<MdDeleteForever style={{ width: '24px', height: '24px' }}/>}
+              text="Delete"
+              className="btn-ghost text-error"
+              onClick={() => handleOpenModal(transaction.id)}
+            />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
     </div>
   )
 }
