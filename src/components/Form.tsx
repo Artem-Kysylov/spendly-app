@@ -77,7 +77,7 @@ const Form = () => {
       {toastMessage && (
         <ToastMessage text={toastMessage.text} type={toastMessage.type} />
       )}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='w-[50vw] rounded-lg light-grey border p-5'>
         <input 
           type="text" 
           placeholder="Transaction Name" 

@@ -72,3 +72,10 @@ html {
     font-family: 'Montserrat', sans-serif;
 }
 
+@layer components {
+    .table tr {
+        border-bottom: 0 !important;
+      }
+  }
+  
+

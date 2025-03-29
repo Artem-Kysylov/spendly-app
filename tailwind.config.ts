@@ -14,7 +14,11 @@ const config: Config = {
       'xl': '1280px',
       '2xl': '1536px',
     },
-    extend: {},
+    extend: {
+      colors: {
+        'light-grey': '#ACACAC', 
+      },
+    },
   },
   plugins: [daisyui],
   daisyui: {
@@ -23,7 +27,7 @@ const config: Config = {
         mytheme: {
           'primary': '#3559E0',
           'primary-light': '#F5F7FE',
-          'light-grey': '#ACACAC',
+          'light-grey': '#ACACAC', 
           'secondary-black': '#111111',
         },
       },

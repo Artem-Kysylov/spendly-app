@@ -74,10 +74,10 @@ const TransactionsTable = ({ transactions, onDelete }: TransactionsTableProps) =
           onConfirm={() => handleDelete(selectedTransactionId)}
         />
       )}
-<div className="overflow-x-auto rounded-[10px] border border-light-grey bg-base-100">
+<div className="overflow-x-auto rounded-[10px] border light-grey bg-base-100">
   <table className="table">
     {/* head */}
-    <thead className="border-b border-light-grey">
+    <thead className="border-b">
       <tr>
         <th className="!text-[16px]">#</th>
         <th className="!text-[16px]">Transaction Name</th>
@@ -87,9 +87,9 @@ const TransactionsTable = ({ transactions, onDelete }: TransactionsTableProps) =
         <th className="!text-[16px]">Delete</th>
       </tr>
     </thead>
-    <tbody className="[&>tr]:border-b [&>tr]:border-light-grey">
+    <tbody className="[&>tr]:border-b [&>tr]:border-0">
       {transactions.map((transaction, index) => (
-        <tr key={transaction.id} className="border-b border-light-grey">
+        <tr key={transaction.id} className="border-0">
           <th>{index + 1}</th>
           <td>{transaction.title}</td>
           <td>{transaction.amount}</td>
