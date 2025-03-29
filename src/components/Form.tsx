@@ -77,11 +77,11 @@ const Form = () => {
       {toastMessage && (
         <ToastMessage text={toastMessage.text} type={toastMessage.type} />
       )}
-      <form onSubmit={handleSubmit} className='w-[50vw] rounded-lg light-grey border p-5'>
+      <form onSubmit={handleSubmit} className='w-[50vw] rounded-lg light-grey border p-5 flex flex-col gap-5'>
         <input 
           type="text" 
           placeholder="Transaction Name" 
-          className="input" 
+          className="w-full px-4 py-3 rounded-lg border border-primary focus:border-primary focus:outline-none text-base" 
           value={title}
           required
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
@@ -90,12 +90,12 @@ const Form = () => {
         <input 
           type="number" 
           placeholder="Amount(USD)" 
-          className="input" 
+          className="w-full px-4 py-3 rounded-lg border border-primary focus:border-primary focus:outline-none text-base" 
           value={amount}
           required
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAmount((e.target.value))}
         />
-        <div>
+        <div className='flex gap-5'>
           <input 
             type="radio" 
             name="type" 
