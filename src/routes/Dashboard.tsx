@@ -39,7 +39,7 @@ const Dashboard = () => {
       <TopBar/>
       <div className="flex flex-col items-center gap-5 text-center mt-[30px] px-5 md:flex-row md:justify-between md:text-left">
         <h1 className="text-[35px] font-semibold text-secondary-black">
-          Welcome <span className="text-primary">{session?.user?.user_metadata?.name}</span>
+          Welcome <span className="text-primary">{session?.user?.user_metadata?.name}✌️</span>
         </h1>
         <Button
           className='btn-primary text-white'

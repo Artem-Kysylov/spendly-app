@@ -20,7 +20,7 @@ const FormPage = () => {
           text='Back to Dashboard'
           onClick={() => navigate('/dashboard')}
         />
-        <h1 className='text-[25px] font-semibold text-secondary-black mt-[30px] mb-2'>Fill the form and add new transaction</h1>
+        <h1 className='text-[25px] font-semibold text-secondary-black mt-[30px] mb-2'>Fill out the form and add new transaction📝</h1>
         <Form />
       </div>
     </>
