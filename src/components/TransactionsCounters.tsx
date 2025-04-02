@@ -32,7 +32,7 @@ const TransactionsCounters = () => {
     }, []);
     
   return (
-    <div className="flex justify-between gap-5">
+    <div className="flex flex-col md:flex-row justify-between gap-5">
         <div className="flex flex-col items-center justify-center gap-2 w-full h-[20vh] rounded-lg light-grey border">
             <h3 className="text-6 text-error text-center">Total Expenses</h3>
             <span className="text-[25px] font-semibold text-error text-center">${totalExpenses}</span>
