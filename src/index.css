@@ -69,6 +69,7 @@ input {
 body,
 html {
     font-family: 'Montserrat', sans-serif;
+    scroll-behavior: smooth;
 }
 
 @layer components {

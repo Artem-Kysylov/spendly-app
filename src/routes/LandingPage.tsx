@@ -9,14 +9,16 @@ import Footer from '../components/landing-sections/Footer'
 
 const LandingPage = () => {
   return (
-    <>
+    <div 
+      className="bg-[url('/landing-page-bg.png')] bg-cover bg-center bg-no-repeat"
+    >
       <Header/>
       <Hero/>
       <HowItWorks/>
       <WhyChooseUs/>
       <Cta/>
       <Footer/>
-    </>
+    </div>
   )
 }
 
