@@ -1,19 +1,28 @@
 // Imports 
-import { useState } from 'react'
 import { UserAuth } from '../context/AuthContext'
+import useModal from '../hooks/useModal'
 
 // Import components 
 import Button from "../components/Button"
 import Modal from "../components/Modal"
 
 const TopBar = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    // Hooks
+    const { isModalOpen, openModal, closeModal } = useModal()
 
     const { session, signOut } = UserAuth()
 
     return (
         <>
-            <div className="flex justify-between items-center p-4">
+            {isModalOpen && (
+                <Modal 
+                    title="Signout"
+                    text="Are you sure you want to signout?"
+                    onClose={closeModal}
+                    signOut={signOut}
+                    />
+                )}
+            <div className="flex justify-between items-center p-5 border-b light-grey">
                 <div className="flex items-center">
                     <img 
                         src="/Spendly-logo.svg" 
@@ -23,7 +32,7 @@ const TopBar = () => {
                 </div>
                 <div className="flex items-center gap-2">
                     {session?.user?.user_metadata?.avatar_url && (
-                        <div className="avatar flex items-center justify-center">
+                        <div className="avatar flex items-center justify-center bg-white">
                             <div className="w-10 h-10 rounded-full overflow-hidden">
                                 <img 
                                     className="w-full h-full object-cover"
@@ -37,18 +46,10 @@ const TopBar = () => {
                     <Button
                         text='Signout'
                         className='btn-ghost text-primary p-0'
-                        onClick={() => setIsModalOpen(true)}
+                        onClick={openModal}
                     />
                 </div>
             </div>
-                {isModalOpen && (
-                    <Modal 
-                        title="Signout"
-                        text="Are you sure you want to signout?"
-                        onClose={() => setIsModalOpen(false)}
-                        signOut={signOut}
-                    />
-                )}
         </>
     )
 }

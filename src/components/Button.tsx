@@ -1,7 +1,7 @@
 // Import types
 import { ButtonProps } from '../types/types'
 
-const Button = ({ text, className, onClick, type = 'button', disabled, isLoading }: ButtonProps) => {
+const Button = ({ text, className, onClick, type = 'button', disabled, isLoading, icon }: ButtonProps) => {
   return (
     <button 
       className={`btn ${className} ${disabled ? 'opacity-50 cursor-not-allowed bg-[#3559E0] text-white' : ''}`} 
@@ -15,7 +15,10 @@ const Button = ({ text, className, onClick, type = 'button', disabled, isLoading
           {text}
         </>
       ) : (
-        text
+        <>
+          {icon && <span className="icon-class">{icon}</span>}
+          {text}
+        </>
       )}
     </button>
   )

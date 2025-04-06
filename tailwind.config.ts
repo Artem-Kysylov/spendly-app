@@ -7,7 +7,18 @@ const config: Config = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    screens: {
+      'sm': '375px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
+    extend: {
+      colors: {
+        'light-grey': '#ACACAC', 
+      },
+    },
   },
   plugins: [daisyui],
   daisyui: {
@@ -15,6 +26,9 @@ const config: Config = {
       {
         mytheme: {
           'primary': '#3559E0',
+          'primary-light': '#F5F7FE',
+          'light-grey': '#ACACAC', 
+          'secondary-black': '#111111',
         },
       },
     ],

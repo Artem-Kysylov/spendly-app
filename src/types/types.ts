@@ -7,7 +7,8 @@ export interface ButtonProps {
     className?: string,
     type?: 'button' | 'submit' | 'reset',
     disabled?: boolean,
-    isLoading?: boolean
+    isLoading?: boolean,
+    icon?: ReactNode
 }
 
 export interface AuthContextType {
@@ -33,11 +34,6 @@ export interface Transaction {
     created_at: string
 }
 
-export interface ModalProps {
-    title: string,
-    text: string
-}
-
 export interface TransactionsTableProps {
     transactions: Transaction[]
     onDelete: () => void
@@ -47,5 +43,6 @@ export interface ModalProps {
     title: string,
     text: string,
     onClose: () => void,
-    signOut: () => void
+    onConfirm?: () => void,
+    signOut?: () => void
 }

@@ -77,11 +77,11 @@ const Form = () => {
       {toastMessage && (
         <ToastMessage text={toastMessage.text} type={toastMessage.type} />
       )}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='w-full md:w-[50vw] rounded-lg light-grey border p-5 flex flex-col gap-5'>
         <input 
           type="text" 
           placeholder="Transaction Name" 
-          className="input" 
+          className="w-full px-4 py-3 rounded-lg border border-primary focus:border-primary focus:outline-none text-base" 
           value={title}
           required
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
@@ -90,30 +90,39 @@ const Form = () => {
         <input 
           type="number" 
           placeholder="Amount(USD)" 
-          className="input" 
+          className="w-full px-4 py-3 rounded-lg border border-primary focus:border-primary focus:outline-none text-base" 
           value={amount}
           required
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAmount((e.target.value))}
         />
-        <div>
-          <input 
-            type="radio" 
-            name="type" 
-            id="expense" 
-            checked={type === 'expense'}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setType(e.target.value as 'expense' | 'income')}
-            value="expense"
-          />
-          <label htmlFor="expense">Expense</label>
-          <input 
-            type="radio" 
-            name="type" 
-            id="income" 
-            checked={type === 'income'}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setType(e.target.value as 'expense' | 'income')}
-            value="income"
-          />
-          <label htmlFor="income">Income</label>
+        <div className="flex gap-4 w-full">
+          <label className={`cursor-pointer p-7 flex-1 rounded-lg border text-center font-medium transition-all
+            ${type === "expense" ? "bg-error text-white border-error" : "light-grey text-secondary-black"}`}
+          >
+            <input
+              type="radio"
+              name="type"
+              value="expense"
+              className="hidden"
+              checked={type === "expense"}
+              onChange={(e) => setType(e.target.value as 'expense' | 'income')}
+            />
+            Expense
+          </label>
+
+          <label className={`cursor-pointer p-7 flex-1 rounded-lg border text-center font-medium transition-all
+            ${type === "income" ? "bg-success text-white border-success" : "light-grey text-secondary-black"}`}
+          >
+            <input
+              type="radio"
+              name="type"
+              value="income"
+              className="hidden"
+              checked={type === "income"}
+              onChange={(e) => setType(e.target.value as 'expense' | 'income')}
+            />
+            Income
+          </label>
         </div>
       <Button 
         type='submit'

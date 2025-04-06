@@ -1,6 +1,12 @@
+/* Font  */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+/* Tailwind  */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 
 /* Reset styles  */
 *,
@@ -54,7 +60,28 @@ h6 {
 }
 
 input {
-    border: none;
     background: transparent;
     width: 100%;
 }
+
+/* Basic styles  */
+
+body,
+html {
+    font-family: 'Montserrat', sans-serif;
+    scroll-behavior: smooth;
+}
+
+@layer components {
+    .table tr {
+        border-bottom: 0 !important;
+      }
+  }
+
+  .landing__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+
