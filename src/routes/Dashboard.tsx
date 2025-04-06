@@ -9,6 +9,7 @@ import Button from '../components/Button'
 import TransactionsTable from '../components/TransactionsTable'
 import EmptyState from '../components/EmptyState'
 import TransactionsCounters from '../components/TransactionsCounters'
+import Spinner from '../components/Spinner'
 
 // Import hooks 
 import { useNavigate } from 'react-router-dom'
@@ -21,10 +22,13 @@ const Dashboard = () => {
 
   const navigate = useNavigate()
   const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const fetchTransactions = async () => {
+    setIsLoading(true)
     const { data, error } = await supabase.from('Transactions').select('*')
     setTransactions(data as Transaction[])
+    setTimeout(() => setIsLoading(false), 500)
     if (error) {
       console.error('Error fetching transactions:', error)
     }
@@ -47,7 +51,9 @@ const Dashboard = () => {
           onClick={() => navigate('/form')}
         />
       </div>
-      {transactions.length === 0 ? (
+      {isLoading ? (
+        <Spinner />
+      ) : transactions.length === 0 ? (
         <EmptyState />
       ) : (
         <div className="mt-[30px] px-5 flex flex-col gap-5">
