@@ -38,6 +38,7 @@ const Dashboard = () => {
     fetchTransactions()
   }, [])
 
+
   return (
     <div>
       <TopBar/>
