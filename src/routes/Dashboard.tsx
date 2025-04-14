@@ -4,7 +4,6 @@ import { UserAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabaseClient'
 
 // Import components 
-import TopBar from '../components/TopBar'
 import Button from '../components/Button'
 import TransactionsTable from '../components/TransactionsTable'
 import EmptyState from '../components/EmptyState'
@@ -41,7 +40,6 @@ const Dashboard = () => {
 
   return (
     <div>
-      <TopBar/>
       <div className="flex flex-col items-center gap-5 text-center mt-[30px] px-5 md:flex-row md:justify-between md:text-left">
         <h1 className="text-[35px] font-semibold text-secondary-black">
           Welcome <span className="text-primary">{session?.user?.user_metadata?.name}✌️</span>

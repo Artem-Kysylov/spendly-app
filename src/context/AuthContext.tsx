@@ -25,6 +25,7 @@ export const AuthContextProvider = ({ children }: {children:React.ReactNode}) =>
         return () => subscription.unsubscribe()
       }, [])
 
+
     // Sign in with Google
     const signInWithGoogle = async () => {
         const { data, error } = await supabase.auth.signInWithOAuth({

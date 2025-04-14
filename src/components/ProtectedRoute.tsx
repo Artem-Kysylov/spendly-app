@@ -11,9 +11,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     if(!session) {
         return <Navigate to="/" />
     }
-  return (
-    <div>{children}</div>
-  )
+  return children
 }
 
 export default ProtectedRoute

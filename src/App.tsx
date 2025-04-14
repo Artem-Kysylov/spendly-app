@@ -1,6 +1,7 @@
 // Imports 
 import './index.css'
-import { Outlet, createBrowserRouter, RouterProvider } from "react-router-dom"
+import { UserAuth } from './context/AuthContext'
+import { Outlet, createBrowserRouter, RouterProvider, Navigate } from "react-router-dom"
 
 // Import routes 
 import Dashboard from './routes/Dashboard.tsx'
@@ -15,6 +16,7 @@ import TopBar from './components/TopBar.tsx'
 
 
 function App() {
+  const { session } = UserAuth()
 
   const AppLayout = () => {
     return (
@@ -33,18 +35,18 @@ function App() {
  const router = createBrowserRouter([
     {
       path:'/dashboard',
-      element: <AppLayout/>,
+      element: session ? <AppLayout/> : <Navigate to="/" replace />,
       children: [
         {
-          path: '/dashboard',
+          path: '',
           element: <Dashboard/>
         },       
         {
-          path: '/transactions',
+          path: 'transactions',
           element: <Transactions/>
         },       
         {
-          path: '/budgets',
+          path: 'budgets',
           element: <Budgets/>
         },              
       ]
