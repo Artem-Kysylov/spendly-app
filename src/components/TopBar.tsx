@@ -1,10 +1,11 @@
 // Imports 
 import { UserAuth } from '../context/AuthContext'
 import useModal from '../hooks/useModal'
+import { Link } from 'react-router-dom'
 
 // Import components 
-import Button from "../components/Button"
-import Modal from "../components/Modal"
+import Button from "../components/ui-elements/Button"
+import Modal from "./modals/ConfirmationModal"
 
 const TopBar = () => {
     // Hooks
@@ -30,6 +31,27 @@ const TopBar = () => {
                         className="h-6 w-auto"
                     />
                 </div>
+
+                <nav>
+                    <ul className="flex items-center gap-8">
+                        <li>
+                            <Link to="/dashboard" className="font-medium text-secondary-black">
+                                Dashboard
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/transactions" className="font-medium text-secondary-black">
+                                Transactions
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/budgets" className="font-medium text-secondary-black">
+                                Budgets
+                            </Link>
+                        </li>
+                    </ul>
+                </nav>
+
                 <div className="flex items-center gap-2">
                     {session?.user?.user_metadata?.avatar_url && (
                         <div className="avatar flex items-center justify-center bg-white">

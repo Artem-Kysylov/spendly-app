@@ -3,7 +3,7 @@ import { useSignWithGoogle } from '../../hooks/useSignWithGoogle'
 import { RiMenu3Line, RiCloseLine } from 'react-icons/ri'
 
 // Import components
-import Button from '../Button'
+import Button from '../ui-elements/Button'
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false)

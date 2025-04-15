@@ -39,10 +39,19 @@ export interface TransactionsTableProps {
     onDelete: () => void
 }
 
-export interface ModalProps {
+export interface ConfirmationModalProps {
     title: string,
     text: string,
     onClose: () => void,
     onConfirm?: () => void,
     signOut?: () => void
+}
+
+export interface TextInputProps {
+    type: 'text' | 'number',
+    placeholder: string,
+    value: string,
+    required?: boolean,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }

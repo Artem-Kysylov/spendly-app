@@ -4,11 +4,11 @@ import { UserAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabaseClient'
 
 // Import components 
-import Button from '../components/Button'
+import Button from '../components/ui-elements/Button'
 import TransactionsTable from '../components/TransactionsTable'
 import EmptyState from '../components/EmptyState'
 import TransactionsCounters from '../components/TransactionsCounters'
-import Spinner from '../components/Spinner'
+import Spinner from '../components/ui-elements/Spinner'
 
 // Import hooks 
 import { useNavigate } from 'react-router-dom'
@@ -47,7 +47,7 @@ const Dashboard = () => {
         <Button
           className='btn-primary text-white'
           text='Add Transaction'
-          onClick={() => navigate('/form')}
+          onClick={() => navigate('/transactions')}
         />
       </div>
       {isLoading ? (

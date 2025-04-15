@@ -6,8 +6,8 @@ import { MdDeleteForever } from "react-icons/md"
 
 // Import components 
 import Button from '../components/Button'
-import ToastMessage from './ToastMessage'
-import Modal from './Modal'
+import ToastMessage from './ui-elements/ToastMessage'
+import Modal from './modals/ConfirmationModal'
 
 // Import types
 import { ToastMessageProps, TransactionsTableProps } from '../types/types'

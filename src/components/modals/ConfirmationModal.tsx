@@ -2,38 +2,38 @@
 import  { useEffect, useRef } from 'react'
 
 // Import components
-import Button from './Button'
+import Button from '../ui-elements/Button'
 
 // Import types
-import { ModalProps } from '../types/types'
+import { ConfirmationModalProps } from '../../types/types'
   
-const Modal = ({ title, text, onClose, onConfirm, signOut }: ModalProps) => {
-  const dialogRef = useRef<HTMLDialogElement>(null);
+const Modal = ({ title, text, onClose, onConfirm, signOut }: ConfirmationModalProps) => {
+  const dialogRef = useRef<HTMLDialogElement>(null)
 
   useEffect(() => {
     if (dialogRef.current) {
-      dialogRef.current.showModal();
+      dialogRef.current.showModal()
     }
     
     return () => {
       if (dialogRef.current) {
-        dialogRef.current.close();
+        dialogRef.current.close()
       }
     };
-  }, []);
+  }, [])
 
   const handleSignOut = () => {
     if (signOut) {
-      signOut();
-      onClose();
+      signOut()
+      onClose()
     }
-  };
+  }
 
   const handleConfirm = () => {
     if (onConfirm) {
-      onConfirm();
+      onConfirm()
     }
-  };
+  }
 
   return (
     <dialog ref={dialogRef} id="my_modal_1" className="modal">

@@ -1,5 +1,5 @@
 // Import types
-import { ToastMessageProps } from '../types/types'
+import { ToastMessageProps } from '../../types/types'
 
 // Import components
 import { FaCircleCheck } from "react-icons/fa6"

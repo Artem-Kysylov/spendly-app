@@ -38,9 +38,18 @@ function App() {
 
         {/* App  */}
         <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/transactions" element={<Transactions />} />
-          <Route path="/budgets" element={<Budgets />} />
+          <Route 
+            path="/dashboard" 
+            element={<Dashboard />} 
+          />
+          <Route 
+            path="/transactions" 
+            element={<Transactions />} 
+          />
+          <Route 
+            path="/budgets" 
+            element={<Budgets />} 
+          />
         </Route>
 
         {/* 404 */}
