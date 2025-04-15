@@ -1,69 +1,53 @@
-// Imports 
 import './index.css'
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { UserAuth } from './context/AuthContext'
-import { Outlet, createBrowserRouter, RouterProvider, Navigate } from "react-router-dom"
 
-// Import routes 
+// Routes
 import Dashboard from './routes/Dashboard.tsx'
 import Transactions from './routes/Transactions.tsx'
 import Budgets from './routes/Budgets.tsx'
 import NotFound from './routes/NotFound.tsx'
 import LandingPage from './routes/LandingPage.tsx'
 
-// Import components 
+// Components
 import ProtectedRoute from './components/ProtectedRoute.tsx'
 import TopBar from './components/TopBar.tsx'
 
+// Main layout
+const AppLayout = () => {
+  return (
+    <>
+      <TopBar />
+      <Outlet />
+    </>
+  )
+}
 
 function App() {
   const { session } = UserAuth()
 
-  const AppLayout = () => {
-    return (
-      <ProtectedRoute>
-        <div>
-          <TopBar/>
-          <div>
-            <Outlet/>
-          </div>
-        </div>
-      </ProtectedRoute>
-    )
-  }
+  return (
+    <BrowserRouter>
+      <Routes>
 
-  
- const router = createBrowserRouter([
-    {
-      path:'/dashboard',
-      element: session ? <AppLayout/> : <Navigate to="/" replace />,
-      children: [
-        {
-          path: '',
-          element: <Dashboard/>
-        },       
-        {
-          path: 'transactions',
-          element: <Transactions/>
-        },       
-        {
-          path: 'budgets',
-          element: <Budgets/>
-        },              
-      ]
-    },
-    {
-      path: '/',
-      element: <LandingPage/>,
-    },
-    {
-      path: '/*',
-      element: <NotFound/>
-    },
-  ])
+        {/* Landing page  */}
+        <Route
+          path="/"
+          element={!session ? <LandingPage /> : <Navigate to="/dashboard" replace />}
+        />
 
+        {/* App  */}
+        <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/budgets" element={<Budgets />} />
+        </Route>
 
-return (
-  <RouterProvider router={router} />
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
+
+      </Routes>
+    </BrowserRouter>
   )
 }
 
