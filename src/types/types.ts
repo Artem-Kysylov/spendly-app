@@ -39,12 +39,18 @@ export interface TransactionsTableProps {
     onDelete: () => void
 }
 
-export interface ConfirmationModalProps {
+export interface SignOutModalProps {
     title: string,
     text: string,
     onClose: () => void,
-    onConfirm?: () => void,
-    signOut?: () => void
+    signOut: () => void
+}
+
+export interface DeleteModalProps {
+    title: string,
+    text: string,
+    onClose: () => void,
+    onConfirm: () => void
 }
 
 export interface TextInputProps {
@@ -54,4 +60,12 @@ export interface TextInputProps {
     required?: boolean,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
     onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void,
+}
+
+export interface RadioButtonProps {
+    title: string,
+    value: 'expense' | 'income',
+    currentValue: 'expense' | 'income',
+    variant: 'expense' | 'income',
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }

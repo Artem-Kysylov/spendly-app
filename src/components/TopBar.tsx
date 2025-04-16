@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 // Import components 
 import Button from "../components/ui-elements/Button"
-import Modal from "./modals/ConfirmationModal"
+import SignOutModal from './modals/SignOutModal'
 
 const TopBar = () => {
     // Hooks
@@ -16,7 +16,7 @@ const TopBar = () => {
     return (
         <>
             {isModalOpen && (
-                <Modal 
+                <SignOutModal 
                     title="Signout"
                     text="Are you sure you want to signout?"
                     onClose={closeModal}

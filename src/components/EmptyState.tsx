@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router-dom'
 
 // Import components 
-import Button from './Button'
+import Button from './ui-elements/Button'
 
 const EmptyState = () => {
   const navigate = useNavigate()

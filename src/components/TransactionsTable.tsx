@@ -5,9 +5,9 @@ import useModal from '../hooks/useModal'
 import { MdDeleteForever } from "react-icons/md"
 
 // Import components 
-import Button from '../components/Button'
+import Button from '../components/ui-elements/Button'
 import ToastMessage from './ui-elements/ToastMessage'
-import Modal from './modals/ConfirmationModal'
+import DeleteModal from './modals/DeleteModal'
 
 // Import types
 import { ToastMessageProps, TransactionsTableProps } from '../types/types'
@@ -26,18 +26,21 @@ const TransactionsTable = ({ transactions, onDelete }: TransactionsTableProps) =
       
       if (error) {
         console.error('Error deleting transaction:', error)
+        closeModal()
+        setSelectedTransactionId(null)
         handleToastMessage('Error deleting transaction', 'error')
         return
       }
       
+      closeModal()
+      setSelectedTransactionId(null)
       handleToastMessage('Transaction deleted successfully', 'success')
       onDelete()
     } catch (error) {
       console.error('Unexpected error during deletion:', error)
-      handleToastMessage('An unexpected error occurred', 'error')
-    } finally {
       closeModal()
       setSelectedTransactionId(null)
+      handleToastMessage('An unexpected error occurred', 'error')
     }
   }
 
@@ -67,7 +70,7 @@ const TransactionsTable = ({ transactions, onDelete }: TransactionsTableProps) =
       )}
       {/* Modal */}
       {isModalOpen && selectedTransactionId && (
-        <Modal 
+        <DeleteModal 
           title="Delete transaction"
           text="Are you sure you want to delete this transaction?"
           onClose={handleCloseModal}
