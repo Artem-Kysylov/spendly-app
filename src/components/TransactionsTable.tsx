@@ -20,6 +20,11 @@ const TransactionsTable = ({ transactions, onDelete }: TransactionsTableProps) =
   // Hooks
   const { isModalOpen, openModal, closeModal } = useModal()
 
+  // Sort transactions 
+  const sortedTransactions = [...transactions].sort((a, b) => 
+    new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  )
+
   const handleDelete = async (id: string) => {
     try {
       const { error } = await supabase.from('Transactions').delete().eq('id', id)
@@ -35,7 +40,11 @@ const TransactionsTable = ({ transactions, onDelete }: TransactionsTableProps) =
       closeModal()
       setSelectedTransactionId(null)
       handleToastMessage('Transaction deleted successfully', 'success')
-      onDelete()
+      
+      // Pause before deleting data from the table
+      setTimeout(() => {
+        onDelete()
+      }, 1000)
     } catch (error) {
       console.error('Unexpected error during deletion:', error)
       closeModal()
@@ -91,7 +100,7 @@ const TransactionsTable = ({ transactions, onDelete }: TransactionsTableProps) =
       </tr>
     </thead>
     <tbody className="[&>tr]:border-b [&>tr]:border-0">
-      {transactions.map((transaction, index) => (
+      {sortedTransactions.map((transaction, index) => (
         <tr key={transaction.id} className="border-0">
           <th>{index + 1}</th>
           <td>{transaction.title}</td>

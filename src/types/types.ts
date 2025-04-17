@@ -53,6 +53,12 @@ export interface DeleteModalProps {
     onConfirm: () => void
 }
 
+export interface TransactionModalProps {
+    title: string,
+    onClose: () => void,
+    onSubmit: (message: string, type: ToastMessageProps['type']) => void,
+}
+
 export interface TextInputProps {
     type: 'text' | 'number',
     placeholder: string,
