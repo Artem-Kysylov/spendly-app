@@ -1,5 +1,6 @@
 // Imports 
 import { UserAuth } from '../context/AuthContext'
+import { useLocation } from 'react-router-dom'
 import useModal from '../hooks/useModal'
 import { Link } from 'react-router-dom'
 
@@ -8,6 +9,7 @@ import Button from "../components/ui-elements/Button"
 import SignOutModal from './modals/SignOutModal'
 
 const TopBar = () => {
+    const location = useLocation()
     // Hooks
     const { isModalOpen, openModal, closeModal } = useModal()
 
@@ -35,17 +37,38 @@ const TopBar = () => {
                 <nav>
                     <ul className="flex items-center gap-8">
                         <li>
-                            <Link to="/dashboard" className="font-medium text-secondary-black">
+                            <Link 
+                                to="/dashboard" 
+                                className={`font-medium transition-colors duration-300 hover:text-primary ${
+                                    location.pathname === '/dashboard' 
+                                    ? 'text-primary' 
+                                    : 'text-secondary-black'
+                                }`}
+                            >
                                 Dashboard
                             </Link>
                         </li>
                         <li>
-                            <Link to="/transactions" className="font-medium text-secondary-black">
+                            <Link 
+                                to="/transactions" 
+                                className={`font-medium transition-colors duration-300 hover:text-primary ${
+                                    location.pathname === '/transactions' 
+                                    ? 'text-primary' 
+                                    : 'text-secondary-black'
+                                }`}
+                            >
                                 Transactions
                             </Link>
                         </li>
                         <li>
-                            <Link to="/budgets" className="font-medium text-secondary-black">
+                            <Link 
+                                to="/budgets" 
+                                className={`font-medium transition-colors duration-300 hover:text-primary ${
+                                    location.pathname === '/budgets' 
+                                    ? 'text-primary' 
+                                    : 'text-secondary-black'
+                                }`}
+                            >
                                 Budgets
                             </Link>
                         </li>

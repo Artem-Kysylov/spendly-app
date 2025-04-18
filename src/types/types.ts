@@ -59,6 +59,12 @@ export interface TransactionModalProps {
     onSubmit: (message: string, type: ToastMessageProps['type']) => void,
 }
 
+export interface NewBudgetModalProps  {
+    title: string,
+    onClose: () => void,
+    onSubmit: (message: string, type: ToastMessageProps['type']) => void,
+}
+
 export interface TextInputProps {
     type: 'text' | 'number',
     placeholder: string,
