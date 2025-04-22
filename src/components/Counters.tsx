@@ -1,12 +1,13 @@
 // Imports 
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabaseClient' 
+import { MdModeEditOutline } from 'react-icons/md';
 
 // Import types
 import { Transaction } from '../types/types'
 
 
-const TransactionsCounters = () => {
+const TransactionsCounters = ({ onIconClick }: { onIconClick: () => void }) => {
     const [totalExpenses, setTotalExpenses] = useState(0)
     const [totalIncome, setTotalIncome] = useState(0)
 
@@ -33,6 +34,13 @@ const TransactionsCounters = () => {
     
   return (
     <div className="flex flex-col md:flex-row justify-between gap-5">
+        <div className="flex flex-col items-center justify-center gap-2 w-full h-[20vh] rounded-lg light-grey border relative">
+            <div className="absolute top-5 right-5 cursor-pointer" onClick={onIconClick}>
+                <MdModeEditOutline className="text-primary text-[24px] duration-300 hover:opacity-50" />
+            </div>
+            <h3 className="text-6 text-primary text-center">Total Budget</h3>
+            <span className="text-[25px] font-semibold text-primary text-center">${totalIncome + totalExpenses}</span>
+        </div>
         <div className="flex flex-col items-center justify-center gap-2 w-full h-[20vh] rounded-lg light-grey border">
             <h3 className="text-6 text-error text-center">Total Expenses</h3>
             <span className="text-[25px] font-semibold text-error text-center">${totalExpenses}</span>

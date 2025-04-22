@@ -2,19 +2,22 @@
 import { useEffect, useState } from 'react'
 import { UserAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabaseClient'
+import { useNavigate } from 'react-router-dom'
 
 // Import components 
 import Button from '../components/ui-elements/Button'
 import TransactionsTable from '../components/TransactionsTable'
 import EmptyState from '../components/EmptyState'
-import TransactionsCounters from '../components/TransactionsCounters'
+import Counters from '../components/Counters'
 import Spinner from '../components/ui-elements/Spinner'
+import MainBudgetModal from '../components/modals/MainBudgetModal'
+import ToastMessage from '../components/ui-elements/ToastMessage'
 
 // Import hooks 
-import { useNavigate } from 'react-router-dom'
+import useModal from '../hooks/useModal'
 
 // Import types
-import { Transaction } from '../types/types'
+import { ToastMessageProps, Transaction } from '../types/types'
 
 const Dashboard = () => {
   const { session } = UserAuth()
@@ -22,6 +25,9 @@ const Dashboard = () => {
   const navigate = useNavigate()
   const [transactions, setTransactions] = useState<Transaction[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [toastMessage, setToastMessage] = useState<ToastMessageProps | null>(null)
+
+  const { isModalOpen, openModal, closeModal } = useModal()
 
   const fetchTransactions = async () => {
     setIsLoading(true)
@@ -37,6 +43,25 @@ const Dashboard = () => {
     fetchTransactions()
   }, [])
 
+  const handleToastMessage = (text: string, type: ToastMessageProps['type']) => {
+    setToastMessage({ text, type })
+    setTimeout(() => {
+      setToastMessage(null)
+    }, 3000)
+  }
+
+  const handleTransactionSubmit = (message: string, type: ToastMessageProps['type']) => {
+    handleToastMessage(message, type)
+    if (type === 'success') {
+      setTimeout(() => {
+        fetchTransactions()
+      }, 1000)
+    }
+  }
+
+  const handleIconClick = () => {
+    openModal()
+  }
 
   return (
     <div>
@@ -50,19 +75,20 @@ const Dashboard = () => {
           onClick={() => navigate('/transactions')}
         />
       </div>
-      {isLoading ? (
-        <Spinner />
-      ) : transactions.length === 0 ? (
-        <EmptyState />
-      ) : (
-        <div className="mt-[30px] px-5 flex flex-col gap-5">
-          <TransactionsCounters />
+      <div className="mt-[30px] px-5 flex flex-col gap-5">
+        <Counters onIconClick={handleIconClick} />
+        {isLoading ? (
+          <Spinner />
+        ) : transactions.length === 0 ? (
+          <EmptyState />
+        ) : (
           <TransactionsTable 
             transactions={transactions} 
             onDelete={fetchTransactions} 
           />
-        </div>
-      )}
+        )}
+      </div>
+      {isModalOpen && <MainBudgetModal title="Edit main budget" onSubmit={() => {}} onClose={closeModal} />}
     </div>
   )
 }

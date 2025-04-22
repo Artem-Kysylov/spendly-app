@@ -1,5 +1,4 @@
-import React from 'react'
-
+// Imports 
 import { useState } from 'react'
 
 // Import hooks 
