@@ -12,6 +12,7 @@ import Counters from '../components/Counters'
 import Spinner from '../components/ui-elements/Spinner'
 import MainBudgetModal from '../components/modals/MainBudgetModal'
 import ToastMessage from '../components/ui-elements/ToastMessage'
+import CreateMainBudget from '../components/CreateMainBudget'
 
 // Import hooks 
 import useModal from '../hooks/useModal'
@@ -63,8 +64,35 @@ const Dashboard = () => {
     openModal()
   }
 
+  const handleCreateBudget = async (budget: string) => {
+    try {
+        console.log('Creating budget with value:', budget)
+        console.log('User ID:', session?.user?.id)
+        
+        const { data, error } = await supabase
+            .from('users')  // таблица с маленькой буквы
+            .update({ budget: Number(budget) })
+            .eq('user_id', session?.user?.id)
+            .select()
+
+        if (error) {
+            console.error('Supabase error details:', error)
+            throw error
+        }
+
+        console.log('Update response:', data)
+        handleToastMessage('Budget created successfully!', 'success')
+    } catch (error: any) {
+        console.error('Error creating budget:', error.message || error)
+        handleToastMessage(error.message || 'Error creating budget', 'error')
+    }
+  }
+
   return (
     <div>
+      {toastMessage && (
+        <ToastMessage text={toastMessage.text} type={toastMessage.type} />
+      )}
       <div className="flex flex-col items-center gap-5 text-center mt-[30px] px-5 md:flex-row md:justify-between md:text-left">
         <h1 className="text-[35px] font-semibold text-secondary-black">
           Welcome <span className="text-primary">{session?.user?.user_metadata?.name}✌️</span>
@@ -89,6 +117,9 @@ const Dashboard = () => {
         )}
       </div>
       {isModalOpen && <MainBudgetModal title="Edit main budget" onSubmit={() => {}} onClose={closeModal} />}
+      <div className="flex justify-center">
+        <CreateMainBudget onSubmit={handleCreateBudget} />
+      </div>
     </div>
   )
 }

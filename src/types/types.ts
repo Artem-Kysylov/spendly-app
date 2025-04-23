@@ -87,3 +87,14 @@ export interface RadioButtonProps {
     variant: 'expense' | 'income',
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }
+
+export interface BudgetPresetProps {
+    title: string,
+    value: string,
+    currentValue: string,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+}
+
+export interface CreateMainBudgetProps {
+    onSubmit: (budget: string) => void;
+}
