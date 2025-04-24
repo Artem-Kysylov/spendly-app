@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { UserAuth } from '../context/AuthContext'
 
 // Import components 
 import TextInput from './ui-elements/TextInput'
@@ -9,6 +10,8 @@ import BudgetPreset from './ui-elements/BudgetPreset'
 import { CreateMainBudgetProps } from '../types/types'
 
 const CreateMainBudget = ({ onSubmit }: CreateMainBudgetProps) => {
+    const { signOut } = UserAuth()
+
     const [mainBudget, setMainBudget] = useState<string>('')
     const [selectedPreset, setSelectedPreset] = useState<string>('')
 
@@ -31,8 +34,17 @@ const CreateMainBudget = ({ onSubmit }: CreateMainBudgetProps) => {
         }
     }
 
+    const handleCancel = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        try {
+            await signOut()
+        } catch (error) {
+            console.error('Error signing out:', error)
+        }
+    }
+
     return (
-        <div className="flex flex-col items-center justify-center gap-5 w-[630px] mt-[100px]">
+        <div className="flex flex-col items-center justify-center gap-5 w-[630px]">
             <img src="/illustration-main-budget.svg" alt="main-budget" />
             <h2 className="text-[35px] font-semibold text-secondary-black">Let`s create your main budget</h2>
             <p className="text-secondary-black">Pick any convenient budget for you or type your custom value</p>
@@ -53,11 +65,18 @@ const CreateMainBudget = ({ onSubmit }: CreateMainBudgetProps) => {
                 type="text"
                 placeholder="Enter your main budget (USD)"
             />
-            <Button 
-                className='btn-primary text-white'
-                text="Create Main Budget"
-                onClick={handleSubmit}
-            />
+            <div className='flex justify-center gap-3 w-full'>
+                <Button 
+                    className='btn-ghost' 
+                    text='Cancel' 
+                    onClick={handleCancel}
+                />
+                <Button 
+                    className='btn-primary text-white'
+                    text="Create Main Budget"
+                    onClick={handleSubmit}
+                />
+            </div>
         </div>
     )
 }

@@ -8,6 +8,7 @@ import Transactions from './routes/Transactions.tsx'
 import Budgets from './routes/Budgets.tsx'
 import NotFound from './routes/NotFound.tsx'
 import LandingPage from './routes/LandingPage.tsx'
+import AddNewBudget from './routes/AddNewBudget.tsx'
 
 // Components
 import ProtectedRoute from './components/ProtectedRoute.tsx'
@@ -29,11 +30,20 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-
         {/* Landing page  */}
         <Route
           path="/"
           element={!session ? <LandingPage /> : <Navigate to="/dashboard" replace />}
+        />
+
+        {/* Add New Budget  */}
+        <Route
+          path="/add-new-budget"
+          element={
+            <ProtectedRoute>
+              <AddNewBudget />
+            </ProtectedRoute>
+          }
         />
 
         {/* App  */}
@@ -54,7 +64,6 @@ function App() {
 
         {/* 404 */}
         <Route path="*" element={<NotFound />} />
-
       </Routes>
     </BrowserRouter>
   )
