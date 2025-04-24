@@ -28,7 +28,7 @@ const TotalBudgetModal = ({ title, onClose, onSubmit }: MainBudgetModalProps) =>
 
             try {
                 const { data, error } = await supabase
-                    .from('budgets')
+                    .from('Main_Budget')
                     .select('amount')
                     .eq('user_id', session.user.id)
                     .single()
@@ -62,7 +62,7 @@ const TotalBudgetModal = ({ title, onClose, onSubmit }: MainBudgetModalProps) =>
         try {
             setIsLoading(true)
             const { data, error } = await supabase
-                .from('budgets')
+                .from('Main_Budget')
                 .update({ amount: Number(amount) })
                 .eq('user_id', session.user.id)
                 .select()

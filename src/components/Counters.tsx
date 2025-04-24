@@ -18,7 +18,7 @@ const TransactionsCounters = ({ onIconClick }: { onIconClick: () => void }) => {
             if (!session?.user?.id) return
 
             const { data, error } = await supabase
-                .from('budgets')
+                .from('Main_Budget')
                 .select('amount')
                 .eq('user_id', session.user.id)
                 .single()

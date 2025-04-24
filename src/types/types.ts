@@ -98,3 +98,10 @@ export interface BudgetPresetProps {
 export interface CreateMainBudgetProps {
     onSubmit: (budget: string) => void;
 }
+
+export interface BudgetFolderItemProps {
+    id: string,
+    emoji: string,
+    name: string,
+    amount: number,
+}
