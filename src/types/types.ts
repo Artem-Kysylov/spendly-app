@@ -105,3 +105,9 @@ export interface BudgetFolderItemProps {
     name: string,
     amount: number,
 }
+
+export interface BudgetDetailsProps {
+    emoji: string,
+    name: string,
+    amount: number,
+}

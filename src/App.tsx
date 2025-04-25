@@ -9,6 +9,7 @@ import Budgets from './routes/Budgets.tsx'
 import NotFound from './routes/NotFound.tsx'
 import LandingPage from './routes/LandingPage.tsx'
 import AddNewBudget from './routes/AddNewBudget.tsx'
+import BudgetDetails from './routes/BudgetDetails.tsx'
 
 // Components
 import ProtectedRoute from './components/ProtectedRoute.tsx'
@@ -52,18 +53,28 @@ function App() {
             path="/dashboard" 
             element={<Dashboard />} 
           />
+
+          {/* Transactions  */}
           <Route 
             path="/transactions" 
             element={<Transactions />} 
           />
+
+          {/* Budgets  */}
           <Route 
             path="/budgets" 
             element={<Budgets />} 
           />
-        </Route>
 
-        {/* 404 */}
-        <Route path="*" element={<NotFound />} />
+          {/* Budget Details  */}
+          <Route 
+            path="/budget/:id" 
+            element={<BudgetDetails />} 
+          />
+
+          {/* 404 */}
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )
