@@ -7,7 +7,7 @@ import { DeleteModalProps } from '../../types/types'
 // Import components 
 import Button from '../ui-elements/Button'
 
-const DeleteModal = ({ title, text, onClose, onConfirm }: DeleteModalProps) => {
+const DeleteModal = ({ title, text, onClose, onConfirm, isLoading = false }: DeleteModalProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null)
 
   useEffect(() => {
@@ -33,11 +33,17 @@ const DeleteModal = ({ title, text, onClose, onConfirm }: DeleteModalProps) => {
         <p className="py-4">{text}</p>
         <div className="modal-action">
           <form onSubmit={handleSubmit}>
-            <Button className='btn-ghost' text='Cancel' onClick={onClose}/>
+            <Button 
+              className='btn-ghost' 
+              text='Cancel' 
+              onClick={onClose}
+              disabled={isLoading}
+            />
             <Button 
               className='btn-error text-white' 
-              text='Delete' 
+              text={isLoading ? 'Deleting...' : 'Delete'} 
               type="submit"
+              disabled={isLoading}
             />
           </form>
         </div>

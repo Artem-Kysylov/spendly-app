@@ -5,7 +5,10 @@ import { useNavigate } from 'react-router-dom'
 // import components 
 import Button from './ui-elements/Button'
 
-const BudgetDetailsControls = () => {
+// Import types
+import { BudgetDetailsControlsProps } from '../types/types'
+
+const BudgetDetailsControls = ({ onDeleteClick, onEditClick }: BudgetDetailsControlsProps) => {
   const navigate = useNavigate()
 
   return (
@@ -20,13 +23,13 @@ const BudgetDetailsControls = () => {
                 icon={<MdEdit style={{ width: '24px', height: '24px' }}/>}
                 text="Edit budget"
                 className="btn-ghost text-primary p-0"
-                onClick={() => {}}
+                onClick={onEditClick}
             />
             <Button
               icon={<MdDeleteForever style={{ width: '24px', height: '24px' }}/>}
               text="Delete"
               className="btn-ghost text-error p-0"
-              onClick={() => {}}
+              onClick={onDeleteClick}
             />
         </div>
     </div>

@@ -1,16 +1,16 @@
-// Import types
+// Imports 
 import { TextInputProps } from '../../types/types'
 
-const TextInput = ({ type, placeholder, value, onChange, onInput }: TextInputProps) => {
+const TextInput = ({ type, placeholder, value, onChange, onInput, disabled }: TextInputProps) => {
   return (
-    <input 
-        className='w-full px-4 py-3 rounded-lg border border-primary focus:border-primary focus:outline-none text-base'
-        type={type}
-        placeholder={placeholder}
-        value={value} 
-        required    
-        onChange={onChange}
-        onInput={onInput}    
+    <input
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      onInput={onInput}
+      disabled={disabled}
+      className='w-full h-[50px] rounded-lg border light-grey px-[20px] outline-none focus:border-primary transition-colors duration-300'
     />
   )
 }

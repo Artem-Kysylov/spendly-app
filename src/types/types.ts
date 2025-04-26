@@ -50,7 +50,8 @@ export interface DeleteModalProps {
     title: string,
     text: string,
     onClose: () => void,
-    onConfirm: () => void
+    onConfirm: () => void,
+    isLoading?: boolean
 }
 
 export interface TransactionModalProps {
@@ -75,9 +76,9 @@ export interface TextInputProps {
     type: 'text' | 'number',
     placeholder: string,
     value: string,
-    required?: boolean,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
     onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    disabled?: boolean,
 }
 
 export interface RadioButtonProps {
@@ -110,4 +111,22 @@ export interface BudgetDetailsProps {
     emoji: string,
     name: string,
     amount: number,
+}
+
+export interface BudgetDetailsFormProps {
+    onSubmit: (title: string, amount: string) => Promise<void>;
+    isSubmitting: boolean;
+}
+
+export interface BudgetDetailsControlsProps {
+    onDeleteClick: () => void,
+    onEditClick: () => void
+}
+
+export interface BudgetModalProps {
+    title: string,
+    onClose: () => void,
+    onSubmit: (emoji: string, name: string, amount: number) => Promise<void>,
+    isLoading?: boolean,
+    initialData?: BudgetDetailsProps
 }
