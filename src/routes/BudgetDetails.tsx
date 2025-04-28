@@ -15,10 +15,10 @@ import Spinner from '../components/ui-elements/Spinner'
 import ToastMessage from '../components/ui-elements/ToastMessage'
 import DeleteModal from '../components/modals/DeleteModal'
 import BudgetModal from '../components/modals/BudgetModal'
+import TransactionsTable from '../components/TransactionsTable'
 
 // Import types
-import { BudgetDetailsProps } from '../types/types'
-import { ToastMessageProps } from '../types/types'
+import { BudgetDetailsProps, Transaction, ToastMessageProps } from '../types/types'
 
 const BudgetDetails = () => {
   const { id } = useParams()
@@ -37,8 +37,9 @@ const BudgetDetails = () => {
   const [budgetDetails, setBudgetDetails] = useState<BudgetDetailsProps>({
     emoji: '😊',
     name: 'Loading...',
-    amount: 0
+    amount: 0,
   })
+  const [transactions, setTransactions] = useState<Transaction[]>([])
 
   const handleToastMessage = (text: string, type: ToastMessageProps['type']) => {
     setToastMessage({ text, type })
@@ -58,7 +59,7 @@ const BudgetDetails = () => {
           budget_folder_id: id,
           user_id: session.user.id,
           title,
-          amount: Number(amount),
+          amount: Number(amount)
         })
         .select()
 
@@ -69,7 +70,7 @@ const BudgetDetails = () => {
       }
 
       handleToastMessage('Transaction added successfully!', 'success')
-      // Здесь в будущем можно добавить обновление списка транзакций
+      fetchTransactions()
     } catch (error) {
       console.error('Error:', error)
       handleToastMessage('An unexpected error occurred', 'error')
@@ -143,7 +144,7 @@ const BudgetDetails = () => {
       setIsLoading(true)
       const { data, error } = await supabase
         .from('Budget_Folders')
-        .select('emoji, name, amount')
+        .select('emoji, name, amount, type')
         .eq('id', id)
         .eq('user_id', session.user.id)
         .single()
@@ -154,7 +155,7 @@ const BudgetDetails = () => {
       }
 
       if (data) {
-        setBudgetDetails(data)
+        setBudgetDetails(data as BudgetDetailsProps)
       }
     } catch (error) {
       console.error('Error:', error)
@@ -163,8 +164,30 @@ const BudgetDetails = () => {
     }
   }
 
+  const fetchTransactions = async () => {
+    if (!session?.user?.id || !id) return
+
+    try {
+      const { data, error } = await supabase
+        .from('Budget_Folder_Transactions')
+        .select('*')
+        .eq('budget_folder_id', id)
+        .eq('user_id', session.user.id)
+
+      if (error) {
+        console.error('Error fetching transactions:', error)
+        return
+      }
+
+      setTransactions(data || [])
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
   useEffect(() => {
     fetchBudgetDetails()
+    fetchTransactions()
   }, [id, session?.user?.id])
 
   if (isLoading) {
@@ -173,6 +196,33 @@ const BudgetDetails = () => {
         <Spinner />
       </div>
     )
+  }
+
+  const handleDeleteTransaction = async (id: string) => {
+    if (!session?.user?.id || !id) return
+
+    try {
+      setIsDeleting(true)
+      const { error } = await supabase
+        .from('Budget_Folder_Transactions')
+        .delete()
+        .eq('id', id)
+        .eq('user_id', session.user.id)
+
+      if (error) {
+        console.error('Error deleting transaction:', error)
+        handleToastMessage('Failed to delete transaction. Please try again.', 'error')
+        return
+      }
+
+      handleToastMessage('Transaction deleted successfully!', 'success')
+      fetchBudgetDetails()
+    } catch (error) {
+      console.error('Error:', error)
+      handleToastMessage('An unexpected error occurred', 'error')
+    } finally {
+      setIsDeleting(false)  
+    }
   }
 
   return (
@@ -184,7 +234,7 @@ const BudgetDetails = () => {
         onDeleteClick={openDeleteModal}
         onEditClick={openEditModal}
       />
-      <div className='flex items-start justify-between gap-[20px]'>
+      <div className='flex items-start justify-between gap-[20px] mb-[30px]'>
         <BudgetDetailsInfo 
           emoji={budgetDetails.emoji}
           name={budgetDetails.name}
@@ -195,6 +245,14 @@ const BudgetDetails = () => {
           isSubmitting={isSubmitting}
         />
       </div>
+
+      {transactions.length > 0 && (
+        <TransactionsTable 
+          transactions={transactions}
+          onDeleteTransaction={handleDeleteTransaction}
+        />
+      )}
+
       {isDeleteModalOpen && (
         <DeleteModal
           title="Delete Budget"
@@ -213,6 +271,7 @@ const BudgetDetails = () => {
           initialData={budgetDetails}
         />
       )}
+
     </div>
   )
 }

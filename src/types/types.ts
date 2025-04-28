@@ -36,7 +36,11 @@ export interface Transaction {
 
 export interface TransactionsTableProps {
     transactions: Transaction[]
-    onDelete: () => void
+    onDeleteTransaction: (id: string) => Promise<void>
+    deleteModalConfig?: {
+        title: string
+        text: string
+    }
 }
 
 export interface SignOutModalProps {
@@ -102,6 +106,12 @@ export interface CreateMainBudgetProps {
 
 export interface BudgetFolderItemProps {
     id: string,
+    emoji: string,
+    name: string,
+    amount: number,
+}
+
+export interface BudgetDetailsInfoProps {
     emoji: string,
     name: string,
     amount: number,

@@ -59,10 +59,28 @@ const Budgets = () => {
     }, 3000)
   }
 
-  const handleBudgetSubmit = (message: string, type: ToastMessageProps['type']) => {
-    handleToastMessage(message, type)
-    if (type === 'success') {
-      fetchBudgetFolders() // Обновляем список после успешного создания
+  const handleBudgetSubmit = async (emoji: string, name: string, amount: number) => {
+    try {
+      const { error } = await supabase
+        .from('Budget_Folders')
+        .insert({
+          user_id: session?.user?.id,
+          emoji,
+          name,
+          amount,
+          type: 'expense'
+        })
+
+      if (error) {
+        handleToastMessage('Failed to create budget', 'error')
+        return
+      }
+
+      handleToastMessage('Budget created successfully', 'success')
+      closeModal()
+      fetchBudgetFolders()
+    } catch (error) {
+      handleToastMessage('An unexpected error occurred', 'error')
     }
   }
 

@@ -62,6 +62,27 @@ const Transactions = () => {
     }
   }
 
+  const handleDeleteTransaction = async (id: string) => {
+    try {
+      const { error } = await supabase.from('Transactions').delete().eq('id', id)
+      
+      if (error) {
+        console.error('Error deleting transaction:', error)
+        handleToastMessage('Error deleting transaction', 'error')
+        return
+      }
+      
+      handleToastMessage('Transaction deleted successfully', 'success')
+      // Pause before deleting data from the table
+      setTimeout(() => {
+        fetchTransactions()
+      }, 1000)
+    } catch (error) {
+      console.error('Unexpected error during deletion:', error)
+      handleToastMessage('An unexpected error occurred', 'error')
+    }
+  }
+
   return (
     <div>
       {toastMessage && (
@@ -99,7 +120,11 @@ const Transactions = () => {
         <div className='mt-[30px] px-5'>
           <TransactionsTable 
             transactions={transactions} 
-            onDelete={fetchTransactions} 
+            onDeleteTransaction={handleDeleteTransaction}
+            deleteModalConfig={{
+              title: "Delete transaction",
+              text: "Are you sure you want to delete this transaction?"
+            }}
           />
         </div>
       )}

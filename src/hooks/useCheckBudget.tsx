@@ -17,7 +17,7 @@ const useCheckBudget = (userId: string | undefined) => {
                 console.log('Checking budget for user:', userId)
                 
                 const { data, error } = await supabase
-                    .from('budgets')
+                    .from('Budgets')
                     .select('id')
                     .eq('user_id', userId)
 
