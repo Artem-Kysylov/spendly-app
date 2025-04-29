@@ -121,6 +121,7 @@ export interface BudgetDetailsProps {
     emoji: string,
     name: string,
     amount: number,
+    type: 'expense' | 'income'
 }
 
 export interface BudgetDetailsFormProps {
@@ -136,7 +137,8 @@ export interface BudgetDetailsControlsProps {
 export interface BudgetModalProps {
     title: string,
     onClose: () => void,
-    onSubmit: (emoji: string, name: string, amount: number) => Promise<void>,
+    onSubmit: (emoji: string, name: string, amount: number, type: 'expense' | 'income') => Promise<void>,
     isLoading?: boolean,
-    initialData?: BudgetDetailsProps
+    initialData?: BudgetDetailsProps,
+    handleToastMessage?: (text: string, type: ToastMessageProps['type']) => void
 }

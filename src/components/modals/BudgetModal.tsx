@@ -1,7 +1,5 @@
 // Imports 
 import { useState, useEffect, useRef } from 'react'
-import { supabase } from '../../lib/supabaseClient'
-import { UserAuth } from '../../context/AuthContext'
 import EmojiPicker from 'emoji-picker-react'
 
 // Import components 
@@ -12,8 +10,7 @@ import RadioButton from '../ui-elements/RadioButton'
 // Import types 
 import { BudgetModalProps } from '../../types/types'
 
-const BudgetModal = ({ title, onClose, onSubmit, isLoading = false, initialData }: BudgetModalProps) => {
-    const { session } = UserAuth()
+const BudgetModal = ({ title, onClose, onSubmit, isLoading = false, initialData, handleToastMessage }: BudgetModalProps) => {
     const dialogRef = useRef<HTMLDialogElement>(null)
 
     // State 
@@ -21,7 +18,8 @@ const BudgetModal = ({ title, onClose, onSubmit, isLoading = false, initialData 
     const [openEmojiPicker, setOpenEmojiPicker] = useState<boolean>(false)
     const [budgetName, setBudgetName] = useState<string>(initialData?.name || '')
     const [amount, setAmount] = useState<string>(initialData?.amount?.toString() || '')
-    const [type, setType] = useState<'expense' | 'income'>('expense')
+    const [type, setType] = useState<'expense' | 'income'>(initialData?.type || 'expense')
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
     useEffect(() => {
         if (dialogRef.current) {
@@ -34,13 +32,30 @@ const BudgetModal = ({ title, onClose, onSubmit, isLoading = false, initialData 
         }
     }, [])
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        await onSubmit(emojiIcon, budgetName, Number(amount))
+        if (!emojiIcon || !budgetName || !amount) return
+
+        try {
+            setIsSubmitting(true)
+            await onSubmit(emojiIcon, budgetName, Number(amount), type)
+            onClose()
+        } catch (error) {
+            console.error('Error submitting budget:', error)
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, '')
+    }
+
+    const handleCancel = () => {
+        if (handleToastMessage) {
+            handleToastMessage('Budget creation cancelled', 'error')
+        }
+        onClose()
     }
 
     return (
@@ -102,7 +117,7 @@ const BudgetModal = ({ title, onClose, onSubmit, isLoading = false, initialData 
                         <Button
                             text="Cancel"
                             className="btn-ghost text-primary"
-                            onClick={onClose}
+                            onClick={handleCancel}
                             disabled={isLoading}
                         />
                         <Button
@@ -110,7 +125,7 @@ const BudgetModal = ({ title, onClose, onSubmit, isLoading = false, initialData 
                             text={initialData ? "Save changes" : "Create budget"}
                             className="btn-primary text-white"
                             disabled={isLoading || !budgetName || !amount}
-                            isLoading={isLoading}
+                            isLoading={isSubmitting}
                         />
                     </div>
                 </form>

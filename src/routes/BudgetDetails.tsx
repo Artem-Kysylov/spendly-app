@@ -38,6 +38,7 @@ const BudgetDetails = () => {
     emoji: '😊',
     name: 'Loading...',
     amount: 0,
+    type: 'expense'
   })
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
@@ -48,23 +49,74 @@ const BudgetDetails = () => {
     }, 3000)
   }
 
+  const fetchBudgetType = async () => {
+    if (!session?.user?.id || !id) return
+
+    try {
+      console.log('Fetching budget type for id:', id)
+      const { data, error } = await supabase
+        .from('Budget_Folders')
+        .select('type')
+        .eq('id', id)
+        .single()
+
+      if (error) {
+        console.error('Error fetching budget type:', error)
+        return
+      }
+
+      if (data) {
+        console.log('Received budget data:', data)
+      } else {
+        console.log('No budget data received')
+      }
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
   const handleTransactionSubmit = async (title: string, amount: string) => {
     if (!session?.user?.id || !id) return
 
     try {
+      // Сначала получаем тип бюджета
+      const { data: budgetData, error: budgetError } = await supabase
+        .from('Budget_Folders')
+        .select('type')
+        .eq('id', id)
+        .single()
+
+      if (budgetError) {
+        console.error('Error fetching budget type:', budgetError)
+        handleToastMessage('Failed to determine budget type', 'error')
+        return
+      }
+
+      if (!budgetData?.type) {
+        console.error('Budget type is missing')
+        handleToastMessage('Budget type is missing', 'error')
+        return
+      }
+
+      console.log('Creating transaction for budget:', {
+        budgetId: id,
+        budgetType: budgetData.type
+      })
+
       setIsSubmitting(true)
-      const { error } = await supabase
+      const { error: transactionError } = await supabase
         .from('Budget_Folder_Transactions')
         .insert({
           budget_folder_id: id,
           user_id: session.user.id,
           title,
-          amount: Number(amount)
+          amount: Number(amount),
+          type: budgetData.type // Явно используем полученный тип
         })
         .select()
 
-      if (error) {
-        console.error('Error creating transaction:', error)
+      if (transactionError) {
+        console.error('Error creating transaction:', transactionError)
         handleToastMessage('Failed to add transaction. Please try again.', 'error')
         return
       }
@@ -179,6 +231,7 @@ const BudgetDetails = () => {
         return
       }
 
+      console.log('Fetched transactions:', data)
       setTransactions(data || [])
     } catch (error) {
       console.error('Error:', error)
@@ -186,6 +239,8 @@ const BudgetDetails = () => {
   }
 
   useEffect(() => {
+    // Загружаем тип бюджета сразу при монтировании компонента
+    fetchBudgetType()
     fetchBudgetDetails()
     fetchTransactions()
   }, [id, session?.user?.id])
@@ -239,6 +294,7 @@ const BudgetDetails = () => {
           emoji={budgetDetails.emoji}
           name={budgetDetails.name}
           amount={budgetDetails.amount}
+          type={budgetDetails.type}
         />
         <BudgetDetailsForm 
           onSubmit={handleTransactionSubmit}

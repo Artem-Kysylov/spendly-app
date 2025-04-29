@@ -21,6 +21,7 @@ const Budgets = () => {
   const { session } = UserAuth()
   const [toastMessage, setToastMessage] = useState<ToastMessageProps | null>(null)
   const [budgetFolders, setBudgetFolders] = useState<BudgetFolderItemProps[]>([])
+  
   const { isModalOpen, openModal, closeModal } = useModal()
 
   const fetchBudgetFolders = async () => {
@@ -59,7 +60,7 @@ const Budgets = () => {
     }, 3000)
   }
 
-  const handleBudgetSubmit = async (emoji: string, name: string, amount: number) => {
+  const handleBudgetSubmit = async (emoji: string, name: string, amount: number, type: 'expense' | 'income') => {
     try {
       const { error } = await supabase
         .from('Budget_Folders')
@@ -68,7 +69,7 @@ const Budgets = () => {
           emoji,
           name,
           amount,
-          type: 'expense'
+          type
         })
 
       if (error) {
@@ -119,9 +120,9 @@ const Budgets = () => {
           title="Create a new budget💸"
           onClose={() => {
             closeModal()
-            handleToastMessage('Budget creation cancelled', 'error')
           }}
           onSubmit={handleBudgetSubmit}
+          handleToastMessage={handleToastMessage}
         />
       )}
     </div>
