@@ -1,43 +1,82 @@
-// Imports 
 import './index.css'
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { UserAuth } from './context/AuthContext'
 
-// Import routes 
+// Routes
 import Dashboard from './routes/Dashboard.tsx'
+import Transactions from './routes/Transactions.tsx'
+import Budgets from './routes/Budgets.tsx'
 import NotFound from './routes/NotFound.tsx'
-import FormPage from './routes/FormPage.tsx'
 import LandingPage from './routes/LandingPage.tsx'
+import AddNewBudget from './routes/AddNewBudget.tsx'
+import BudgetDetails from './routes/BudgetDetails.tsx'
 
-// Import components 
+// Components
 import ProtectedRoute from './components/ProtectedRoute.tsx'
+import TopBar from './components/TopBar.tsx'
+
+// Main layout
+const AppLayout = () => {
+  return (
+    <>
+      <TopBar />
+      <Outlet />
+    </>
+  )
+}
 
 function App() {
   const { session } = UserAuth()
 
-return (
+  return (
     <BrowserRouter>
       <Routes>
-          <Route path="/" element={!session ? <LandingPage /> : <Navigate to="/dashboard" replace />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
+        {/* Landing page  */}
+        <Route
+          path="/"
+          element={!session ? <LandingPage /> : <Navigate to="/dashboard" replace />}
+        />
+
+        {/* Add New Budget  */}
+        <Route
+          path="/add-new-budget"
+          element={
+            <ProtectedRoute>
+              <AddNewBudget />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* App  */}
+        <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
           <Route 
-            path="/form"
-            element={
-              <ProtectedRoute>
-                <FormPage />
-              </ProtectedRoute>
-            }
+            path="/dashboard" 
+            element={<Dashboard />} 
           />
-          <Route path="/*" element={<NotFound />} />
+
+          {/* Transactions  */}
+          <Route 
+            path="/transactions" 
+            element={<Transactions />} 
+          />
+
+          {/* Budgets  */}
+          <Route 
+            path="/budgets" 
+            element={<Budgets />} 
+          />
+
+          {/* Budget Details  */}
+          <Route 
+            path="/budget/:id" 
+            element={<BudgetDetails />} 
+          />
+
+          {/* 404 */}
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Routes>
-  </BrowserRouter>
+    </BrowserRouter>
   )
 }
 

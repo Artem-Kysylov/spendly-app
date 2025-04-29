@@ -4,8 +4,8 @@ import { supabase } from '../lib/supabaseClient'
 import { UserAuth } from '../context/AuthContext'
 
 // Import components 
-import Button from './Button'
-import ToastMessage from './ToastMessage'
+import Button from './ui-elements/Button'
+import ToastMessage from './ui-elements/ToastMessage'
 
 // Import types
 import { ToastMessageProps } from '../types/types'

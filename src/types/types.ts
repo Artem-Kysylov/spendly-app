@@ -36,13 +36,109 @@ export interface Transaction {
 
 export interface TransactionsTableProps {
     transactions: Transaction[]
-    onDelete: () => void
+    onDeleteTransaction: (id: string) => Promise<void>
+    deleteModalConfig?: {
+        title: string
+        text: string
+    }
 }
 
-export interface ModalProps {
+export interface SignOutModalProps {
     title: string,
     text: string,
     onClose: () => void,
-    onConfirm?: () => void,
-    signOut?: () => void
+    signOut: () => void
+}
+
+export interface DeleteModalProps {
+    title: string,
+    text: string,
+    onClose: () => void,
+    onConfirm: () => void,
+    isLoading?: boolean
+}
+
+export interface TransactionModalProps {
+    title: string,
+    onClose: () => void,
+    onSubmit: (message: string, type: ToastMessageProps['type']) => void,
+}
+
+export interface NewBudgetModalProps  {
+    title: string,
+    onClose: () => void,
+    onSubmit: (message: string, type: ToastMessageProps['type']) => void,
+}
+
+export interface MainBudgetModalProps {
+    title: string,
+    onClose: () => void,
+    onSubmit: (message: string, type: ToastMessageProps['type']) => void,
+}
+
+export interface TextInputProps {
+    type: 'text' | 'number',
+    placeholder: string,
+    value: string,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    disabled?: boolean,
+}
+
+export interface RadioButtonProps {
+    title: string,
+    value: 'expense' | 'income',
+    currentValue: 'expense' | 'income',
+    variant: 'expense' | 'income',
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+}
+
+export interface BudgetPresetProps {
+    title: string,
+    value: string,
+    currentValue: string,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+}
+
+export interface CreateMainBudgetProps {
+    onSubmit: (budget: string) => void;
+}
+
+export interface BudgetFolderItemProps {
+    id: string,
+    emoji: string,
+    name: string,
+    amount: number,
+}
+
+export interface BudgetDetailsInfoProps {
+    emoji: string,
+    name: string,
+    amount: number,
+}
+
+export interface BudgetDetailsProps {
+    emoji: string,
+    name: string,
+    amount: number,
+    type: 'expense' | 'income'
+}
+
+export interface BudgetDetailsFormProps {
+    onSubmit: (title: string, amount: string) => Promise<void>;
+    isSubmitting: boolean;
+}
+
+export interface BudgetDetailsControlsProps {
+    onDeleteClick: () => void,
+    onEditClick: () => void
+}
+
+export interface BudgetModalProps {
+    title: string,
+    onClose: () => void,
+    onSubmit: (emoji: string, name: string, amount: number, type: 'expense' | 'income') => Promise<void>,
+    isLoading?: boolean,
+    initialData?: BudgetDetailsProps,
+    handleToastMessage?: (text: string, type: ToastMessageProps['type']) => void
 }

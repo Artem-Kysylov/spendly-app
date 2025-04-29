@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router-dom'
 
 // Import components
-import Button from '../components/Button'
+import Button from '../components/ui-elements/Button'
 
 const NotFound = () => {
   const navigate = useNavigate()

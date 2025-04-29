@@ -1,5 +1,4 @@
 // Import components 
-import TopBar from '../components/TopBar'
 import Form from '../components/Form'
 import Button from '../components/Button'
 
@@ -13,7 +12,6 @@ const FormPage = () => {
 
   return (
     <>
-      <TopBar />
       <div className='ml-5 mr-5 mt-[30px]'>
         <Button
           className='btn-ghost text-primary p-0'
