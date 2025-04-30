@@ -142,3 +142,15 @@ export interface BudgetModalProps {
     initialData?: BudgetDetailsProps,
     handleToastMessage?: (text: string, type: ToastMessageProps['type']) => void
 }
+
+export interface UnifiedTransaction {
+    id: string
+    title: string
+    amount: number
+    type: 'expense' | 'income'
+    created_at: string
+    user_id: string
+    budget_folder_id?: string
+    budget_type?: 'expense' | 'income'
+    source: 'general' | 'budget'
+}

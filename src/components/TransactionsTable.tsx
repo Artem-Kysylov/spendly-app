@@ -7,7 +7,16 @@ import Button from './ui-elements/Button'
 import DeleteModal from './modals/DeleteModal'
 
 // Import types
-import { TransactionsTableProps } from '../types/types'
+import { UnifiedTransaction } from '../types/types'
+
+interface TransactionsTableProps {
+  transactions: UnifiedTransaction[]
+  onDeleteTransaction: (id: string) => Promise<void>
+  deleteModalConfig?: {
+    title: string
+    text: string
+  }
+}
 
 const TransactionsTable = ({ 
   transactions, 
@@ -62,6 +71,7 @@ const TransactionsTable = ({
               <th className="!text-[16px]">Transaction Name</th>
               <th className="!text-[16px]">Amount(USD)</th>
               <th className="!text-[16px]">Type</th>
+              <th className="!text-[16px]">Source</th>
               <th className="!text-[16px]">Date</th>
               <th className="!text-[16px]">Delete</th>
             </tr>
@@ -75,6 +85,11 @@ const TransactionsTable = ({
                 <td>
                   <span className={`badge ${transaction.type === 'expense' ? 'badge-error text-white uppercase text-xs' : 'badge-success text-white uppercase text-xs'}`}>
                     {transaction.type}
+                  </span>
+                </td>
+                <td>
+                  <span className={`badge badge-ghost text-xs uppercase`}>
+                    {transaction.source}
                   </span>
                 </td>
                 <td>{new Date(transaction.created_at).toLocaleDateString()}</td>

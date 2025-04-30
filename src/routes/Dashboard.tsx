@@ -1,5 +1,5 @@
 // Imports 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { UserAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabaseClient'
 import { useNavigate } from 'react-router-dom'
@@ -16,34 +16,22 @@ import ToastMessage from '../components/ui-elements/ToastMessage'
 // Import hooks 
 import useModal from '../hooks/useModal'
 import useCheckBudget from '../hooks/useCheckBudget'
+import useTransactions from '../hooks/useTransactions'
 
 // Import types
-import { ToastMessageProps, Transaction } from '../types/types'
+import { ToastMessageProps } from '../types/types'
 
 const Dashboard = () => {
   const { session } = UserAuth()
   const navigate = useNavigate()
-  const [transactions, setTransactions] = useState<Transaction[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [toastMessage, setToastMessage] = useState<ToastMessageProps | null>(null)
   const { isModalOpen, openModal, closeModal } = useModal()
 
+  // Используем хук для получения транзакций
+  const { transactions, isLoading: isTransactionsLoading, refetch } = useTransactions()
+
   // Проверяем наличие бюджета
   const { isLoading: isBudgetChecking } = useCheckBudget(session?.user?.id)
-
-  const fetchTransactions = async () => {
-    setIsLoading(true)
-    const { data, error } = await supabase.from('Transactions').select('*')
-    setTransactions(data as Transaction[])
-    setTimeout(() => setIsLoading(false), 500)
-    if (error) {
-      console.error('Error fetching transactions:', error)
-    }
-  }
-
-  useEffect(() => {
-    fetchTransactions()
-  }, [])
 
   const handleToastMessage = (text: string, type: ToastMessageProps['type']) => {
     setToastMessage({ text, type })
@@ -56,7 +44,7 @@ const Dashboard = () => {
     handleToastMessage(message, type)
     if (type === 'success') {
       setTimeout(() => {
-        fetchTransactions()
+        refetch()
       }, 1000)
     }
   }
@@ -78,7 +66,7 @@ const Dashboard = () => {
       handleToastMessage('Transaction deleted successfully', 'success')
       // Pause before deleting data from the table
       setTimeout(() => {
-        fetchTransactions()
+        refetch()
       }, 1000)
     } catch (error) {
       console.error('Unexpected error during deletion:', error)
@@ -88,7 +76,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      {(isLoading || isBudgetChecking) ? (
+      {(isTransactionsLoading || isBudgetChecking) ? (
         <Spinner />
       ) : (
         <>
@@ -107,7 +95,7 @@ const Dashboard = () => {
           </div>
           <div className="mt-[30px] px-5 flex flex-col gap-5">
             <Counters onIconClick={handleIconClick} />
-            {isLoading ? (
+            {isTransactionsLoading ? (
               <Spinner />
             ) : transactions.length === 0 ? (
               <EmptyState />

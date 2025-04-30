@@ -1,9 +1,10 @@
 // Imports 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
 
 // Import hooks 
 import useModal from '../hooks/useModal'
+import useTransactions from '../hooks/useTransactions'
 
 // Import components 
 import Button from '../components/ui-elements/Button'
@@ -14,37 +15,15 @@ import TransactionModal from '../components/modals/TransactionModal'
 import ToastMessage from '../components/ui-elements/ToastMessage'
 
 // Import types
-import { Transaction, ToastMessageProps } from '../types/types'
+import { ToastMessageProps } from '../types/types'
 
 const Transactions = () => {
   // States 
-  const [transactions, setTransactions] = useState<Transaction[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [toastMessage, setToastMessage] = useState<ToastMessageProps | null>(null)
 
   // Import hooks 
   const { isModalOpen, openModal, closeModal } = useModal()
-
-  const fetchTransactions = async () => {
-    try {
-      const { data, error } = await supabase.from('Transactions').select('*')
-      
-      if (error) {
-        console.error('Error fetching transactions:', error)
-        return
-      }
-      
-      setTransactions(data as Transaction[])
-    } catch (error) {
-      console.error('Unexpected error:', error)
-    } finally {
-      setTimeout(() => setIsLoading(false), 500)
-    }
-  }
-
-  useEffect(() => {
-    fetchTransactions()
-  }, [])
+  const { transactions, isLoading, refetch } = useTransactions()
 
   const handleToastMessage = (text: string, type: ToastMessageProps['type']) => {
     setToastMessage({ text, type })
@@ -57,7 +36,7 @@ const Transactions = () => {
     handleToastMessage(message, type)
     if (type === 'success') {
       setTimeout(() => {
-        fetchTransactions()
+        refetch()
       }, 1000)
     }
   }
@@ -75,7 +54,7 @@ const Transactions = () => {
       handleToastMessage('Transaction deleted successfully', 'success')
       // Pause before deleting data from the table
       setTimeout(() => {
-        fetchTransactions()
+        refetch()
       }, 1000)
     } catch (error) {
       console.error('Unexpected error during deletion:', error)

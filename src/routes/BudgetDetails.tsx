@@ -304,7 +304,11 @@ const BudgetDetails = () => {
 
       {transactions.length > 0 && (
         <TransactionsTable 
-          transactions={transactions}
+          transactions={transactions.map(transaction => ({
+            ...transaction,
+            source: 'budget',
+            user_id: session?.user?.id || ''
+          }))}
           onDeleteTransaction={handleDeleteTransaction}
         />
       )}

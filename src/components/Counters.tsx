@@ -4,14 +4,22 @@ import { supabase } from '../lib/supabaseClient'
 import { MdModeEditOutline } from 'react-icons/md'
 import { UserAuth } from '../context/AuthContext'
 
-// Import types
-import { Transaction } from '../types/types'
+// Import hooks
+import useTransactions from '../hooks/useTransactions'
 
 const TransactionsCounters = ({ onIconClick }: { onIconClick: () => void }) => {
     const { session } = UserAuth()
-    const [totalExpenses, setTotalExpenses] = useState(0)
-    const [totalIncome, setTotalIncome] = useState(0)
+    const { transactions } = useTransactions()
     const [budget, setBudget] = useState(0)
+
+    // Calculate totals from all transactions (both general and budget)
+    const totalExpenses = transactions
+        .filter(t => t.type === 'expense')
+        .reduce((total, t) => total + t.amount, 0)
+
+    const totalIncome = transactions
+        .filter(t => t.type === 'income')
+        .reduce((total, t) => total + t.amount, 0)
 
     useEffect(() => {
         const fetchBudget = async () => {
@@ -33,25 +41,7 @@ const TransactionsCounters = ({ onIconClick }: { onIconClick: () => void }) => {
             }
         }
 
-        const fetchTransactions = async () => {
-            const { data, error } = await supabase
-                .from('Transactions')
-                .select('type, amount') as { data: Transaction[] | null, error: any }
-
-            if (error) {
-                console.error('Error fetching transactions:', error)
-                return
-            }
-          
-            const expensesTotal = data?.filter(t => t.type === 'expense').reduce((total, t) => total + t.amount, 0) || 0
-            const incomeTotal = data?.filter(t => t.type === 'income').reduce((total, t) => total + t.amount, 0) || 0
-
-            setTotalExpenses(expensesTotal)
-            setTotalIncome(incomeTotal)
-        }
-
         fetchBudget()
-        fetchTransactions()
     }, [session?.user?.id])
     
     return (
