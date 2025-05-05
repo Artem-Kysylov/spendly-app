@@ -90,19 +90,19 @@ const Budgets = () => {
       {toastMessage && (
         <ToastMessage text={toastMessage.text} type={toastMessage.type} />
       )}
-      <div className='flex flex-col items-start gap-[15px] mb-[30px]'>
+      <div className='flex flex-col items-center text-center md:items-start md:text-left gap-[15px] mb-[30px]'>
         <h1 className="text-[35px] font-semibold text-secondary-black">
           Budgets💰
         </h1>
-        <p>Let`s organize your budgets by folders</p>
+        <p>Let's organize your budgets by folders</p>
       </div>
-      <div className='flex items-center justify-start gap-[20px] flex-wrap'>
+      <div className='flex flex-col md:flex-row items-center md:items-start gap-[20px] md:flex-wrap w-full'>
         <NewBudget onClick={openModal} />
         {budgetFolders.map((folder) => (
           <Link  
             to={`/budget/${folder.id}`} 
             key={folder.id}
-            className='cursor-pointer'
+            className='cursor-pointer w-full md:w-auto'
           >
             <BudgetFolderItem 
               key={folder.id}

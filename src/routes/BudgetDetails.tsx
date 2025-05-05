@@ -289,17 +289,21 @@ const BudgetDetails = () => {
         onDeleteClick={openDeleteModal}
         onEditClick={openEditModal}
       />
-      <div className='flex items-start justify-between gap-[20px] mb-[30px]'>
-        <BudgetDetailsInfo 
-          emoji={budgetDetails.emoji}
-          name={budgetDetails.name}
-          amount={budgetDetails.amount}
-          type={budgetDetails.type}
-        />
-        <BudgetDetailsForm 
-          onSubmit={handleTransactionSubmit}
-          isSubmitting={isSubmitting}
-        />
+      <div className='flex flex-col md:flex-row items-center md:items-start justify-between gap-[20px] mb-[30px]'>
+        <div className='w-full md:w-1/2'>
+          <BudgetDetailsInfo 
+            emoji={budgetDetails.emoji}
+            name={budgetDetails.name}
+            amount={budgetDetails.amount}
+            type={budgetDetails.type}
+          />
+        </div>
+        <div className='w-full md:w-1/2'>
+          <BudgetDetailsForm 
+            onSubmit={handleTransactionSubmit}
+            isSubmitting={isSubmitting}
+          />
+        </div>
       </div>
 
       {transactions.length > 0 && (
