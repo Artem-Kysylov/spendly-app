@@ -9,6 +9,9 @@ const BudgetFolderItem = ({ emoji, name, amount }: BudgetFolderItemProps) => {
         <span className='text-[25px]'>{emoji}</span>
         <h3 className='text-secondary-black text-[16px] font-semibold'>{name}</h3>
         <p className='text-secondary-black text-[25px] font-semibold'>${amount}</p>
+        <div className='flex items-center justify-center gap-[10px] opacity-60'>
+          <span>$100 Spend</span>/<span>$1900 Remaining</span>
+        </div>
     </div>
   )
 }

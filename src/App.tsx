@@ -8,7 +8,7 @@ import Transactions from './routes/Transactions.tsx'
 import Budgets from './routes/Budgets.tsx'
 import NotFound from './routes/NotFound.tsx'
 import LandingPage from './routes/LandingPage.tsx'
-import AddNewBudget from './routes/AddNewBudget.tsx'
+import AddNewBudget from './routes/CreateNewBudget.tsx'
 import BudgetDetails from './routes/BudgetDetails.tsx'
 
 // Components

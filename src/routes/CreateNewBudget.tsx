@@ -30,7 +30,7 @@ const AddNewBudget = () => {
 
       // Create new budget
       const { error } = await supabase
-        .from('budgets')
+        .from('Main_Budget')
         .insert([
           {
             user_id: session.user.id,
@@ -54,7 +54,7 @@ const AddNewBudget = () => {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center h-screen'>
+    <div className='flex flex-col items-center justify-center min-h-screen'>
       {toastMessage && (
         <ToastMessage text={toastMessage.text} type={toastMessage.type} />
       )}

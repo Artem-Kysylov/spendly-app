@@ -44,11 +44,11 @@ const CreateMainBudget = ({ onSubmit }: CreateMainBudgetProps) => {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center gap-5 w-[630px]">
+        <div className="flex flex-col items-center justify-center gap-5 w-full px-5 text-center md:w-[630px]">
             <img src="/illustration-main-budget.svg" alt="main-budget" />
             <h2 className="text-[35px] font-semibold text-secondary-black">Let`s create your main budget</h2>
             <p className="text-secondary-black">Pick any convenient budget for you or type your custom value</p>
-            <div className="flex gap-3 w-full">
+            <div className="grid grid-cols-2 md:flex gap-3 w-full">
                 {budgetPresets.map((preset) => (
                     <BudgetPreset
                         key={preset.value}
@@ -65,14 +65,14 @@ const CreateMainBudget = ({ onSubmit }: CreateMainBudgetProps) => {
                 type="text"
                 placeholder="Enter your main budget (USD)"
             />
-            <div className='flex justify-center gap-3 w-full'>
+            <div className='flex flex-col md:flex-row justify-center gap-3 w-full'>
                 <Button 
-                    className='btn-ghost' 
+                    className='btn-ghost w-full md:w-auto' 
                     text='Cancel' 
                     onClick={handleCancel}
                 />
                 <Button 
-                    className='btn-primary text-white'
+                    className='btn-primary text-white w-full md:w-auto'
                     text="Create Main Budget"
                     onClick={handleSubmit}
                 />

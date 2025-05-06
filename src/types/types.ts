@@ -154,3 +154,12 @@ export interface UnifiedTransaction {
     budget_type?: 'expense' | 'income'
     source: 'general' | 'budget'
 }
+
+export interface BudgetCalculations {
+    totalTransactions: number    // Общая сумма транзакций
+    remainingAmount: number      // Оставшаяся сумма до цели или от бюджета
+    spentOrEarned: number       // Потрачено или заработано
+    isLoading: boolean          // Статус загрузки
+    error: string | null        // Ошибка, если есть
+    type: 'expense' | 'income' | null  // Тип бюджета
+  }
