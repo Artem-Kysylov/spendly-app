@@ -6,6 +6,7 @@ import { UserAuth } from '../context/AuthContext'
 
 // Import hooks
 import useModal from '../hooks/useModal'
+import useBudgetCalculations from '../hooks/useBudgetCalculations'
 
 // Components 
 import BudgetDetailsInfo from '../components/BudgetDetailsInfo'
@@ -38,9 +39,15 @@ const BudgetDetails = () => {
     emoji: '😊',
     name: 'Loading...',
     amount: 0,
-    type: 'expense'
+    type: 'expense',
+    spentOrEarned: 0,
+    remainingAmount: 0,
+    isLoading: true
   })
   const [transactions, setTransactions] = useState<Transaction[]>([])
+
+  // Get budget calculations
+  const calculations = useBudgetCalculations(id || '')
 
   const handleToastMessage = (text: string, type: ToastMessageProps['type']) => {
     setToastMessage({ text, type })
@@ -296,6 +303,9 @@ const BudgetDetails = () => {
             name={budgetDetails.name}
             amount={budgetDetails.amount}
             type={budgetDetails.type}
+            spentOrEarned={calculations.spentOrEarned}
+            remainingAmount={calculations.remainingAmount}
+            isLoading={calculations.isLoading}
           />
         </div>
         <div className='w-full md:w-1/2'>

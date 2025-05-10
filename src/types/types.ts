@@ -109,6 +109,10 @@ export interface BudgetFolderItemProps {
     emoji: string,
     name: string,
     amount: number,
+    type: 'expense' | 'income',
+    spentOrEarned: number,
+    remainingAmount: number,
+    isLoading: boolean,
 }
 
 export interface BudgetDetailsInfoProps {
@@ -121,7 +125,10 @@ export interface BudgetDetailsProps {
     emoji: string,
     name: string,
     amount: number,
-    type: 'expense' | 'income'
+    type: 'expense' | 'income',
+    spentOrEarned: number,
+    remainingAmount: number,
+    isLoading: boolean,
 }
 
 export interface BudgetDetailsFormProps {

@@ -2,10 +2,10 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabaseClient'
 import { UserAuth } from '../context/AuthContext'
-import { Link } from 'react-router-dom'
 
 // Import hooks 
 import useModal from '../hooks/useModal'
+
 
 // Import components 
 import NewBudget from '../components/AddNewBudgetFolder'
@@ -99,19 +99,14 @@ const Budgets = () => {
       <div className='flex flex-col md:flex-row items-center md:items-start gap-[20px] md:flex-wrap w-full'>
         <NewBudget onClick={openModal} />
         {budgetFolders.map((folder) => (
-          <Link  
-            to={`/budget/${folder.id}`} 
+          <BudgetFolderItem 
             key={folder.id}
-            className='cursor-pointer w-full md:w-auto'
-          >
-            <BudgetFolderItem 
-              key={folder.id}
-              id={folder.id}
-              emoji={folder.emoji}
-              name={folder.name}
-              amount={folder.amount}
-            />
-          </Link>
+            id={folder.id}
+            emoji={folder.emoji}
+            name={folder.name}
+            amount={folder.amount}
+            type={folder.type}
+          />
         ))}
       </div>
 
